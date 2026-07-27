@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tetris Nova — Звёзды тебя ждут</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Космический фон -->
+    <div class="stars"></div>
+
+
+    <!-- Главное меню -->
+    <section id="menu" class="screen">
+
+        <h1 class="logo">
+            TETRIS NOVA
+        </h1>
+
+        <p class="subtitle">
+            ⭐ Звёзды тебя ждут...
+        </p>
+
+        <button id="startButton">
+            🚀 НАЧАТЬ ПОЛЁТ
+        </button>
+
+        <div class="menu-info">
+            <p>Преодолей галактику</p>
+            <p>Создай своё созвездие</p>
+        </div>
+
+    </section>
+
+
+
+    <!-- Игровой экран -->
+    <section id="gameScreen" class="hidden">
+
+
+        <div class="game-container">
+
+
+            <!-- Поле игры -->
+            <canvas id="gameBoard"
+                    width="300"
+                    height="600">
+            </canvas>
+
+
+
+            <!-- Панель информации -->
+
+            <aside class="panel">
+
+                <h2>
+                    TETRIS NOVA
+                </h2>
+
+
+                <div class="next-box">
+
+                    <h3>
+                        Следующая
+                    </h3>
+
+                    <canvas id="nextPiece"
+                            width="120"
+                            height="120">
+                    </canvas>
+
+                </div>
+
+
+
+                <div class="stats">
+
+                    <p>
+                        ⭐ Счёт:
+                        <span id="score">
+                            0
+                        </span>
+                    </p>
+
+
+                    <p>
+                        🌌 Уровень:
+                        <span id="level">
+                            1
+                        </span>
+                    </p>
+
+
+                    <p>
+                        ✨ Линии:
+                        <span id="lines">
+                            0
+                        </span>
+                    </p>
+
+
+                    <p>
+                        🏆 Рекорд:
+                        <span id="highScore">
+                            0
+                        </span>
+                    </p>
+
+                </div>
+
+
+                <button id="pauseButton">
+                    ⏸ Пауза
+                </button>
+
+
+            </aside>
+
+
+        </div>
+
+
+
+        <!-- Управление телефоном -->
+
+        <div class="mobile-controls">
+
+            <button id="left">
+                ◀
+            </button>
+
+
+            <button id="rotate">
+                ⟳
+            </button>
+
+
+            <button id="right">
+                ▶
+            </button>
+
+
+            <button id="down">
+                ▼
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+    <!-- Окно окончания игры -->
+
+    <section id="gameOver"
+             class="screen hidden">
+
+
+        <h1>
+            ⭐ ЗВЁЗДЫ ТЕБЯ ЖДУТ...
+        </h1>
+
+
+        <p>
+            Твоё путешествие продолжается.
+        </p>
+
+
+        <p>
+            Финальный счёт:
+            <span id="finalScore">
+                0
+            </span>
+        </p>
+
+
+
+        <button id="restartButton">
+            🚀 Вернуться в полёт
+        </button>
+
+
+    </section>
+
+
+
+
+    <!-- Скрипты -->
+
+    <script src="particles.js"></script>
+<script src="audio.js"></script>
+<script src="game.js"></script>
+
+</body>
+</html>

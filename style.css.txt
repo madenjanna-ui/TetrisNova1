@@ -1,0 +1,605 @@
+/* ===================================
+   TETRIS NOVA
+   ⭐ Звёзды тебя ждут...
+=================================== */
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+
+    width: 100%;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background:
+    radial-gradient(circle at center,
+    #18245a,
+    #050816 70%);
+
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+    color: white;
+
+}
+
+
+
+/* ==========================
+   ЗВЁЗДНЫЙ ФОН
+========================== */
+
+
+.stars {
+
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+
+    background-image:
+    radial-gradient(white 1px, transparent 1px),
+    radial-gradient(#8db7ff 1px, transparent 1px);
+
+    background-size:
+    90px 90px,
+    150px 150px;
+
+    animation:
+    starsMove 40s linear infinite;
+
+    opacity: .5;
+
+    z-index: -1;
+
+}
+
+
+@keyframes starsMove {
+
+    from {
+        background-position:
+        0 0,
+        0 0;
+    }
+
+    to {
+
+        background-position:
+        500px 1000px,
+        -500px 800px;
+
+    }
+
+}
+
+
+
+/* ==========================
+   ЭКРАНЫ
+========================== */
+
+
+.screen {
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+
+/* ==========================
+   ЛОГОТИП
+========================== */
+
+
+.logo {
+
+    font-size: 60px;
+
+    letter-spacing: 8px;
+
+    margin-bottom: 20px;
+
+
+    color: #ffffff;
+
+
+    text-shadow:
+
+    0 0 10px #62d9ff,
+    0 0 30px #3867ff,
+    0 0 60px #9d4dff;
+
+
+    animation:
+    pulse 3s infinite;
+
+}
+
+
+
+@keyframes pulse {
+
+
+    50% {
+
+        transform:
+        scale(1.05);
+
+    }
+
+
+}
+
+
+
+.subtitle {
+
+
+    font-size: 28px;
+
+    margin-bottom: 50px;
+
+    color:
+    #cfe9ff;
+
+
+    text-shadow:
+    0 0 20px #55aaff;
+
+}
+
+
+
+/* ==========================
+   КНОПКИ
+========================== */
+
+
+button {
+
+
+    padding:
+
+    15px 40px;
+
+
+    border-radius:
+
+    50px;
+
+
+    border:
+
+    2px solid #8de8ff;
+
+
+    background:
+
+    rgba(20,40,90,.7);
+
+
+    color:
+
+    white;
+
+
+    font-size:
+
+    20px;
+
+
+    cursor:
+
+    pointer;
+
+
+    transition:
+
+    .3s;
+
+
+    box-shadow:
+
+    0 0 20px #3abfff;
+
+
+}
+
+
+
+button:hover {
+
+
+    transform:
+
+    scale(1.08);
+
+
+    background:
+
+    rgba(80,130,255,.8);
+
+
+    box-shadow:
+
+    0 0 40px #ffffff;
+
+
+}
+
+
+
+
+.menu-info {
+
+
+    margin-top:
+
+    50px;
+
+
+    opacity:
+
+    .7;
+
+
+    font-size:
+
+    18px;
+
+}
+
+
+
+/* ==========================
+   ИГРОВАЯ ЗОНА
+========================== */
+
+
+.game-container {
+
+
+    display:
+
+    flex;
+
+
+    gap:
+
+    30px;
+
+
+    align-items:
+
+    flex-start;
+
+
+}
+
+
+
+#gameBoard {
+
+
+    background:
+
+    rgba(0,0,0,.55);
+
+
+    border:
+
+    3px solid #65dcff;
+
+
+    box-shadow:
+
+
+    0 0 20px #00cfff,
+
+
+    inset 0 0 30px #111;
+
+
+}
+
+
+
+.panel {
+
+
+    width:
+
+    220px;
+
+
+    background:
+
+    rgba(10,20,60,.75);
+
+
+    padding:
+
+    20px;
+
+
+    border-radius:
+
+    20px;
+
+
+    border:
+
+    1px solid #65dcff;
+
+
+    box-shadow:
+
+    0 0 25px #395bff;
+
+
+}
+
+
+
+.panel h2 {
+
+
+    text-align:
+
+    center;
+
+
+    margin-bottom:
+
+    20px;
+
+
+}
+
+
+
+.next-box {
+
+
+    text-align:
+
+    center;
+
+
+    margin-bottom:
+
+    20px;
+
+
+}
+
+
+
+#nextPiece {
+
+
+    margin-top:
+
+    10px;
+
+
+    background:
+
+    rgba(0,0,0,.5);
+
+
+}
+
+
+
+.stats {
+
+
+    font-size:
+
+    18px;
+
+
+    line-height:
+
+    2;
+
+
+}
+
+
+
+/* ==========================
+   МОБИЛЬНЫЕ КНОПКИ
+========================== */
+
+
+.mobile-controls {
+
+
+    display:
+
+    none;
+
+
+    margin-top:
+
+    20px;
+
+
+    gap:
+
+    10px;
+
+}
+
+
+
+.mobile-controls button {
+
+    width:
+
+    60px;
+
+    height:
+
+    60px;
+
+    padding:
+
+    0;
+
+}
+
+
+
+/* ==========================
+   GAME OVER
+========================== */
+
+
+#gameOver h1 {
+
+
+    font-size:
+
+    45px;
+
+
+    color:
+
+    #fff;
+
+
+    text-shadow:
+
+    0 0 20px #ffdd55,
+
+    0 0 50px #ffaa00;
+
+
+}
+
+
+
+#gameOver p {
+
+
+    font-size:
+
+    25px;
+
+
+    margin:
+
+    20px;
+
+}
+
+
+
+
+
+/* ==========================
+   ТЕЛЕФОН
+========================== */
+
+
+@media(max-width:700px){
+
+
+    .logo {
+
+        font-size:
+
+        35px;
+
+    }
+
+
+
+    .subtitle {
+
+        font-size:
+
+        20px;
+
+    }
+
+
+
+    .game-container {
+
+
+        flex-direction:
+
+        column;
+
+
+        align-items:
+
+        center;
+
+
+    }
+
+
+
+    .panel {
+
+
+        width:
+
+        300px;
+
+
+    }
+
+
+
+    .mobile-controls {
+
+
+        display:
+
+        flex;
+
+        justify-content:
+
+        center;
+
+
+    }
+
+
+}
