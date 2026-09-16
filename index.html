@@ -778,4 +778,1426 @@ button{
         </div>
 
         <div class="result">
-          <span>🏆 Р
+          <span>🏆 Рекорд</span>
+          <b id="record">0</b>
+        </div>
+
+      </div>
+
+      <button class="mainButton" id="restartButton">
+        ЕЩЁ РАЗ
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const ROOM_NUMBERS=[
+  101,102,103,104,
+  105,106,107,108
+];
+
+let rooms=[];
+
+let running=false;
+let busy=false;
+
+let selected=null;
+
+let score=0;
+let cleaned=0;
+let happy=0;
+
+let dissatisfaction=10;
+
+let gameMinutes=480;
+
+let tickTimer=null;
+let eventTimer=null;
+
+
+/* DOM */
+
+const left=
+document.getElementById("left");
+
+const right=
+document.getElementById("right");
+
+const clock=
+document.getElementById("clock");
+
+const insideClock=
+document.getElementById("insideClock");
+
+const scoreEl=
+document.getElementById("score");
+
+const cleanedEl=
+document.getElementById("cleaned");
+
+const happyEl=
+document.getElementById("happy");
+
+const marker=
+document.getElementById("marker");
+
+const satBox=
+document.getElementById("satBox");
+
+const worker=
+document.getElementById("worker");
+
+const message=
+document.getElementById("message");
+
+const inside=
+document.getElementById("inside");
+
+const insideTitle=
+document.getElementById("insideTitle");
+
+const guestInfo=
+document.getElementById("guestInfo");
+
+const guestRequest=
+document.getElementById("guestRequest");
+
+const actionText=
+document.getElementById("actionText");
+
+const actionBar=
+document.getElementById("actionBar");
+
+
+/* ITEMS */
+
+const bedItem=
+document.getElementById("bedItem");
+
+const mirrorItem=
+document.getElementById("mirrorItem");
+
+const towelItem=
+document.getElementById("towelItem");
+
+const trashItem=
+document.getElementById("trashItem");
+
+const floorItem=
+document.getElementById("floorItem");
+
+const bathItem=
+document.getElementById("bathItem");
+
+
+/* RESET */
+
+function resetRooms(){
+
+  rooms=ROOM_NUMBERS.map(
+    (number,index)=>({
+
+      number,
+      index,
+
+      status:"ready",
+
+      guests:
+        Math.random()<.55 ? 2 : 1,
+
+      waiting:0,
+
+      type:null,
+      request:null,
+
+      bed:false,
+      mirror:false,
+      trash:false,
+      floor:false,
+      bath:false,
+
+      towelsDirty:0,
+      towelsClean:0,
+      towelsRequired:0
+
+    })
+  );
+
+  renderHotel();
+}
+
+
+/* FULL CLEANING */
+
+function fullCleaning(room){
+
+  room.status="clean";
+  room.type="clean";
+
+  room.guests=
+    Math.random()<.55 ? 2 : 1;
+
+  room.waiting=0;
+
+  room.request=
+    "Номер освободился";
+
+  /*
+  Не всё обязательно грязное.
+  Игрок должен осмотреть номер.
+  */
+
+  room.bed=
+    Math.random()<.92;
+
+  room.mirror=
+    Math.random()<.48;
+
+  room.trash=
+    Math.random()<.82;
+
+  room.floor=
+    Math.random()<.72;
+
+  room.bath=
+    Math.random()<.58;
+
+  room.towelsDirty=
+    room.guests;
+
+  room.towelsClean=0;
+
+  room.towelsRequired=
+    room.guests;
+}
+
+
+/* GUEST REQUEST */
+
+function smallRequest(room){
+
+  room.status="request";
+  room.type="request";
+
+  room.waiting=0;
+
+  room.guests=
+    Math.random()<.55 ? 2 : 1;
+
+  /*
+  Всё чисто по умолчанию.
+  */
+
+  room.bed=false;
+  room.mirror=false;
+  room.trash=false;
+  room.floor=false;
+  room.bath=false;
+
+  room.towelsDirty=0;
+  room.towelsClean=0;
+  room.towelsRequired=0;
+
+
+  const requests=[
+    "towels",
+    "trash",
+    "mirror",
+    "bath"
+  ];
+
+  const type=
+    requests[
+      Math.floor(
+        Math.random()*requests.length
+      )
+    ];
+
+
+  if(type==="towels"){
+
+    room.towelsDirty=
+      room.guests;
+
+    room.towelsRequired=
+      room.guests;
+
+    room.request=
+      room.guests===2
+      ?"Нужны два чистых полотенца"
+      :"Нужно чистое полотенце";
+  }
+
+
+  if(type==="trash"){
+
+    room.trash=true;
+
+    room.request=
+      "Можно забрать мусор?";
+  }
+
+
+  if(type==="mirror"){
+
+    room.mirror=true;
+
+    room.request=
+      "Пожалуйста, почистите зеркало";
+  }
+
+
+  if(type==="bath"){
+
+    room.bath=true;
+
+    room.request=
+      "Нужно привести в порядок ванную";
+  }
+
+}
+
+
+/* HOTEL RENDER */
+
+function renderHotel(){
+
+  left.innerHTML="";
+  right.innerHTML="";
+
+  rooms.forEach((room,index)=>{
+
+    const button=
+      document.createElement("button");
+
+    button.className=
+      "roomDoor "+room.status;
+
+
+    let icon="🟢";
+    let text="ГОТОВ";
+
+
+    if(room.status==="clean"){
+      icon="🧹";
+      text="УБОРКА";
+    }
+
+    if(room.status==="request"){
+      icon="🛎️";
+      text="ПРОСЬБА";
+    }
+
+    if(room.status==="urgent"){
+      icon="⚠️";
+      text="СРОЧНО";
+    }
+
+    if(room.status==="dnd"){
+      icon="⛔";
+      text="НЕ БЕСПОКОИТЬ";
+    }
+
+
+    button.innerHTML=`
+
+      <div class="roomNumber">
+        ${room.number}
+      </div>
+
+      <div class="doorIcon">
+        ${icon}
+      </div>
+
+      <div class="doorText">
+        ${text}
+      </div>
+
+      ${
+        (
+          room.status==="clean" ||
+          room.status==="request" ||
+          room.status==="urgent"
+        )
+
+        ?`
+
+        <div class="wait">
+          <div style="
+          width:${Math.min(room.waiting,100)}%">
+          </div>
+        </div>
+
+        `:""
+      }
+    `;
+
+
+    button.addEventListener(
+      "click",
+      ()=>enterRoom(room)
+    );
+
+
+    if(index%2===0)
+      left.appendChild(button);
+    else
+      right.appendChild(button);
+
+  });
+
+}
+
+
+/* ENTER */
+
+function enterRoom(room){
+
+  if(!running || busy)
+    return;
+
+
+  if(room.status==="ready"){
+
+    say("✓ Номер уже готов");
+
+    return;
+  }
+
+
+  if(room.status==="dnd"){
+
+    satisfaction(7);
+
+    say(
+      "⛔ Гость просил не беспокоить"
+    );
+
+    return;
+  }
+
+
+  selected=room;
+
+  moveWorker(room);
+
+  inside.classList.remove("hidden");
+
+  actionText.textContent=
+    "Осмотрите номер";
+
+  actionBar.style.width="0%";
+
+  renderInside();
+}
+
+
+/* WORKER */
+
+function moveWorker(room){
+
+  const row=
+    Math.floor(room.index/2);
+
+  const pos=[
+    5,29,53,77
+  ];
+
+  worker.style.top=
+    pos[row]+"%";
+}
+
+
+/* INSIDE */
+
+function renderInside(){
+
+  if(!selected)
+    return;
+
+  insideTitle.textContent=
+    "Номер "+selected.number;
+
+  guestInfo.textContent=
+    selected.guests===2
+    ?"👥 2 гостя"
+    :"👤 1 гость";
+
+
+  if(selected.type==="request"){
+
+    guestRequest.textContent=
+      "🛎️ Гость: «"+
+      selected.request+
+      "»";
+
+  }else{
+
+    guestRequest.textContent=
+      "🧹 Номер освободился — требуется уборка";
+
+  }
+
+
+  updateItem(
+    bedItem,
+    selected.bed,
+    selected.bed
+      ?"Постель использована"
+      :"В порядке"
+  );
+
+
+  updateItem(
+    mirrorItem,
+    selected.mirror,
+    selected.mirror
+      ?"Есть разводы"
+      :"Чисто"
+  );
+
+
+  updateItem(
+    trashItem,
+    selected.trash,
+    selected.trash
+      ?"Есть мусор"
+      :"Пусто"
+  );
+
+
+  updateItem(
+    floorItem,
+    selected.floor,
+    selected.floor
+      ?"Есть загрязнение"
+      :"Чисто"
+  );
+
+
+  updateItem(
+    bathItem,
+    selected.bath,
+    selected.bath
+      ?"Требует уборки"
+      :"Чисто"
+  );
+
+
+  /*
+  Полотенца имеют несколько состояний.
+  */
+
+  let towelBad=false;
+  let towelState="В порядке";
+
+
+  if(selected.towelsDirty>0){
+
+    towelBad=true;
+
+    towelState=
+      `Грязные ×${selected.towelsDirty}`;
+
+  }else if(
+    selected.towelsRequired>0 &&
+    selected.towelsClean<
+    selected.towelsRequired
+  ){
+
+    towelBad=true;
+
+    towelState=
+      `Чистых ${selected.towelsClean}/${selected.towelsRequired}`;
+
+  }else if(
+    selected.towelsRequired>0
+  ){
+
+    towelState=
+      `Чистые ×${selected.towelsClean}`;
+  }
+
+
+  updateItem(
+    towelItem,
+    towelBad,
+    towelState
+  );
+
+}
+
+
+/* ITEM STATE */
+
+function updateItem(
+  element,
+  bad,
+  text
+){
+
+  element.classList.remove(
+    "bad",
+    "good"
+  );
+
+  element.classList.add(
+    bad ? "bad":"good"
+  );
+
+  element.querySelector(
+    ".itemState"
+  ).textContent=text;
+}
+
+
+/* ACTION */
+
+function doAction(
+  title,
+  callback
+){
+
+  if(
+    !selected ||
+    busy ||
+    !running
+  ) return;
+
+
+  busy=true;
+
+  actionText.textContent=title;
+
+  actionBar.style.width="0%";
+
+
+  const buttons=[
+    bedItem,
+    mirrorItem,
+    towelItem,
+    trashItem,
+    floorItem,
+    bathItem
+  ];
+
+  buttons.forEach(
+    b=>b.disabled=true
+  );
+
+
+  let progress=0;
+
+
+  const timer=
+    setInterval(()=>{
+
+      if(!running){
+
+        clearInterval(timer);
+        return;
+      }
+
+
+      progress+=10;
+
+      actionBar.style.width=
+        progress+"%";
+
+
+      if(progress>=100){
+
+        clearInterval(timer);
+
+        callback();
+
+        /*
+        Работа занимает игровое время.
+        */
+
+        gameMinutes+=5;
+
+        updateClock();
+
+        score+=15;
+
+        scoreEl.textContent=score;
+
+        busy=false;
+
+        buttons.forEach(
+          b=>b.disabled=false
+        );
+
+        actionBar.style.width="0%";
+
+        actionText.textContent=
+          "Готово ✓";
+
+        renderInside();
+      }
+
+    },65);
+
+}
+
+
+/* BED */
+
+bedItem.addEventListener(
+  "click",
+  ()=>{
+
+    if(!selected)
+      return;
+
+
+    if(!selected.bed){
+
+      actionText.textContent=
+        "Кровать уже в порядке";
+
+      return;
+    }
+
+
+    doAction(
+      "🛏 Перестилаем кровать...",
+      ()=>{
+        selected.bed=false;
+      }
+    );
+
+  }
+);
+
+
+/* MIRROR */
+
+mirrorItem.addEventListener(
+  "click",
+  ()=>{
+
+    if(!selected)
+      return;
+
+
+    if(!selected.mirror){
+
+      actionText.textContent=
+        "✨ Зеркало чистое";
+
+      return;
+    }
+
+
+    doAction(
+      "🪞 Чистим зеркало...",
+      ()=>{
+        selected.mirror=false;
+      }
+    );
+
+  }
+);
+
+
+/* TRASH */
+
+trashItem.addEventListener(
+  "click",
+  ()=>{
+
+    if(!selected)
+      return;
+
+
+    if(!selected.trash){
+
+      actionText.textContent=
+        "🗑 Мусора нет";
+
+      return;
+    }
+
+
+    doAction(
+      "🗑 Убираем мусор...",
+      ()=>{
+        selected.trash=false;
+      }
+    );
+
+  }
+);
+
+
+/* FLOOR */
+
+floorItem.addEventListener(
+  "click",
+  ()=>{
+
+    if(!selected)
+      return;
+
+
+    if(!selected.floor){
+
+      actionText.textContent=
+        "✨ Пол чистый";
+
+      return;
+    }
+
+
+    doAction(
+      "🧹 Моём пол...",
+      ()=>{
+        selected.floor=false;
+      }
+    );
+
+  }
+);
+
+
+/* BATH */
+
+bathItem.addEventListener(
+  "click",
+  ()=>{
+
+    if(!selected)
+      return;
+
+
+    if(!selected.bath){
+
+      actionText.textContent=
+        "✨ Ванная чистая";
+
+      return;
+    }
+
+
+    doAction(
+      "🚿 Убираем ванную...",
+      ()=>{
+        selected.bath=false;
+      }
+    );
+
+  }
+);
+
+
+/* TOWELS */
+
+towelItem.addEventListener(
+  "click",
+  ()=>{
+
+    if(!selected)
+      return;
+
+
+    /*
+    Сначала забираем грязные.
+    */
+
+    if(selected.towelsDirty>0){
+
+      const count=
+        selected.towelsDirty;
+
+      doAction(
+        `🧺 Забираем полотенца ×${count}...`,
+        ()=>{
+          selected.towelsDirty=0;
+        }
+      );
+
+      return;
+    }
+
+
+    /*
+    Затем кладём чистые.
+    */
+
+    if(
+      selected.towelsRequired>0 &&
+      selected.towelsClean<
+      selected.towelsRequired
+    ){
+
+      const count=
+        selected.towelsRequired-
+        selected.towelsClean;
+
+
+      doAction(
+        `🤍 Кладём чистые полотенца ×${count}...`,
+        ()=>{
+          selected.towelsClean=
+            selected.towelsRequired;
+        }
+      );
+
+      return;
+    }
+
+
+    actionText.textContent=
+      "✓ Полотенца в порядке";
+
+  }
+);
+
+
+/* CHECK ROOM */
+
+function remainingProblems(room){
+
+  let problems=0;
+
+  if(room.bed)
+    problems++;
+
+  if(room.mirror)
+    problems++;
+
+  if(room.trash)
+    problems++;
+
+  if(room.floor)
+    problems++;
+
+  if(room.bath)
+    problems++;
+
+  if(room.towelsDirty>0)
+    problems++;
+
+  if(
+    room.towelsRequired>0 &&
+    room.towelsClean<
+    room.towelsRequired
+  )
+    problems++;
+
+  return problems;
+}
+
+
+/* EXIT */
+
+document.getElementById(
+  "exitRoom"
+).addEventListener(
+  "click",
+  ()=>{
+
+    /*
+    Выход разрешён всегда,
+    кроме момента выполнения действия.
+    */
+
+    if(
+      !selected ||
+      busy
+    ) return;
+
+
+    const room=selected;
+
+    const problems=
+      remainingProblems(room);
+
+
+    inside.classList.add("hidden");
+
+    selected=null;
+
+
+    /*
+    Всё сделано правильно.
+    */
+
+    if(problems===0){
+
+      room.status="ready";
+      room.waiting=0;
+      room.type=null;
+      room.request=null;
+
+      cleaned++;
+      happy++;
+
+      const bonus=
+        100+
+        Math.max(
+          0,
+          Math.round(
+            (100-room.waiting)*.5
+          )
+        );
+
+      score+=bonus;
+
+      satisfaction(-9);
+
+      cleanedEl.textContent=
+        cleaned;
+
+      happyEl.textContent=
+        happy;
+
+      scoreEl.textContent=
+        score;
+
+      say(
+        `😊 Номер готов! +${bonus}`
+      );
+
+    }
+
+    /*
+    Вышел слишком рано.
+    Номер остаётся активным.
+    */
+
+    else{
+
+      const penalty=
+        Math.min(
+          18,
+          3+problems*3
+        );
+
+      satisfaction(penalty);
+
+      /*
+      Важно:
+      не говорим, что именно забыто.
+      */
+
+      say(
+        "😕 Гость недоволен качеством обслуживания"
+      );
+
+      /*
+      Номер остаётся доступным.
+      Можно вернуться и исправить.
+      */
+
+      if(room.status!=="urgent")
+        room.status="urgent";
+
+      room.waiting=
+        Math.max(
+          room.waiting,
+          65
+        );
+    }
+
+
+    renderHotel();
+
+  }
+);
+
+
+/* EVENTS */
+
+function generateEvent(){
+
+  if(!running)
+    return;
+
+
+  const available=
+    rooms.filter(
+      r=>r.status==="ready"
+    );
+
+
+  if(!available.length)
+    return;
+
+
+  const room=
+    available[
+      Math.floor(
+        Math.random()*
+        available.length
+      )
+    ];
+
+
+  const chance=
+    Math.random();
+
+
+  /*
+  DND
+  */
+
+  if(chance<.16){
+
+    room.status="dnd";
+
+    renderHotel();
+
+
+    setTimeout(()=>{
+
+      if(
+        running &&
+        room.status==="dnd"
+      ){
+
+        fullCleaning(room);
+
+        say(
+          `🧹 Номер ${room.number} освободился`
+        );
+
+        renderHotel();
+      }
+
+    },4500);
+
+    return;
+  }
+
+
+  /*
+  Guest request / checkout
+  */
+
+  if(chance<.50)
+    smallRequest(room);
+  else
+    fullCleaning(room);
+
+
+  renderHotel();
+}
+
+
+/* WAIT */
+
+function updateWaiting(){
+
+  rooms.forEach(room=>{
+
+    if(
+      room.status==="clean" ||
+      room.status==="request" ||
+      room.status==="urgent"
+    ){
+
+      room.waiting+=1.05;
+
+
+      if(
+        room.waiting>=58 &&
+        room.status!=="urgent"
+      ){
+
+        room.status="urgent";
+
+        say(
+          `⚠️ Номер ${room.number} ждёт`
+        );
+      }
+
+
+      if(room.waiting>30)
+        satisfaction(.11);
+
+      if(room.waiting>60)
+        satisfaction(.20);
+
+      if(room.waiting>82)
+        satisfaction(.32);
+
+    }
+
+  });
+
+
+  renderHotel();
+}
+
+
+/* SATISFACTION */
+
+function satisfaction(value){
+
+  dissatisfaction+=value;
+
+  dissatisfaction=
+    Math.max(
+      0,
+      Math.min(
+        100,
+        dissatisfaction
+      )
+    );
+
+
+  marker.style.left=
+    dissatisfaction+"%";
+
+
+  if(dissatisfaction>=72)
+    satBox.classList.add(
+      "danger"
+    );
+  else
+    satBox.classList.remove(
+      "danger"
+    );
+
+
+  if(dissatisfaction>=100)
+    endGame();
+}
+
+
+/* CLOCK */
+
+function updateClock(){
+
+  const h=
+    Math.floor(
+      gameMinutes/60
+    )%24;
+
+  const m=
+    gameMinutes%60;
+
+
+  const value=
+    String(h).padStart(2,"0")
+    +":"+
+    String(m).padStart(2,"0");
+
+
+  clock.textContent=value;
+
+  insideClock.textContent=value;
+}
+
+
+/* MESSAGE */
+
+function say(text){
+
+  message.textContent=text;
+
+  clearTimeout(
+    say.timer
+  );
+
+  say.timer=
+    setTimeout(
+      ()=>message.textContent="",
+      2500
+    );
+}
+
+
+/* START */
+
+function startGame(){
+
+  clearInterval(tickTimer);
+  clearInterval(eventTimer);
+
+  running=true;
+  busy=false;
+
+  selected=null;
+
+  score=0;
+  cleaned=0;
+  happy=0;
+
+  dissatisfaction=10;
+
+  gameMinutes=480;
+
+  scoreEl.textContent=0;
+  cleanedEl.textContent=0;
+  happyEl.textContent=0;
+
+  marker.style.left="10%";
+
+  satBox.classList.remove(
+    "danger"
+  );
+
+  updateClock();
+
+  resetRooms();
+
+  inside.classList.add("hidden");
+
+  document.getElementById(
+    "startScreen"
+  ).classList.add("hidden");
+
+  document.getElementById(
+    "gameOver"
+  ).classList.add("hidden");
+
+
+  setTimeout(
+    ()=>{
+      if(running)
+        generateEvent();
+    },
+    1000
+  );
+
+
+  /*
+  1 real sec = 5 game min
+  */
+
+  tickTimer=
+    setInterval(
+      ()=>{
+
+        if(!running)
+          return;
+
+        gameMinutes+=5;
+
+        updateClock();
+
+        updateWaiting();
+
+      },
+      1000
+    );
+
+
+  eventTimer=
+    setInterval(
+      ()=>{
+
+        if(running)
+          generateEvent();
+
+      },
+      4300
+    );
+
+}
+
+
+/* END */
+
+function endGame(){
+
+  if(!running)
+    return;
+
+
+  running=false;
+  busy=false;
+
+  clearInterval(tickTimer);
+  clearInterval(eventTimer);
+
+  inside.classList.add("hidden");
+
+
+  document.getElementById(
+    "finalCleaned"
+  ).textContent=cleaned;
+
+  document.getElementById(
+    "finalScore"
+  ).textContent=score;
+
+  document.getElementById(
+    "finalHappy"
+  ).textContent=happy;
+
+
+  let record=0;
+
+
+  try{
+
+    record=
+      Number(
+        localStorage.getItem(
+          "madenHotelRecord"
+        )
+      )||0;
+
+
+    if(score>record){
+
+      record=score;
+
+      localStorage.setItem(
+        "madenHotelRecord",
+        record
+      );
+
+    }
+
+  }catch(e){}
+
+
+  document.getElementById(
+    "record"
+  ).textContent=record;
+
+
+  document.getElementById(
+    "gameOver"
+  ).classList.remove("hidden");
+}
+
+
+/* BUTTONS */
+
+document.getElementById(
+  "startButton"
+).addEventListener(
+  "click",
+  startGame
+);
+
+document.getElementById(
+  "restartButton"
+).addEventListener(
+  "click",
+  startGame
+);
+
+
+/* INITIAL */
+
+marker.style.left="10%";
+
+resetRooms();
+updateClock();
+
+</script>
+
+</body>
+</html>
