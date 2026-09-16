@@ -2,10 +2,9 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#071017">
+
 <title>MaDen Hotel</title>
 
 <style>
@@ -36,17 +35,16 @@ button{
   min-height:100dvh;
   position:relative;
   overflow:hidden;
-
-  background:
-    radial-gradient(circle at 50% 0,#244557 0,#0d1d27 38%,#061018 100%);
-
   padding:
     max(14px,env(safe-area-inset-top))
     13px
-    max(20px,env(safe-area-inset-bottom));
+    max(18px,env(safe-area-inset-bottom));
+
+  background:
+    radial-gradient(circle at 50% 0,#274958,#0c1d27 40%,#061018);
 }
 
-/* ---------- HEADER ---------- */
+/* HEADER */
 
 .header{
   display:flex;
@@ -56,8 +54,8 @@ button{
 }
 
 .logo{
-  font-weight:900;
   font-size:18px;
+  font-weight:900;
 }
 
 .clock{
@@ -65,10 +63,10 @@ button{
   border-radius:13px;
   background:rgba(255,255,255,.09);
   border:1px solid rgba(255,255,255,.1);
-  font-weight:800;
+  font-weight:900;
 }
 
-/* ---------- STATS ---------- */
+/* STATS */
 
 .stats{
   display:grid;
@@ -78,11 +76,11 @@ button{
 }
 
 .stat{
-  padding:8px 3px;
   text-align:center;
+  padding:8px 3px;
+  border-radius:13px;
   background:rgba(255,255,255,.065);
   border:1px solid rgba(255,255,255,.08);
-  border-radius:13px;
 }
 
 .stat b{
@@ -92,10 +90,10 @@ button{
 
 .stat span{
   font-size:9px;
-  color:#aab8c2;
+  color:#aebbc5;
 }
 
-/* ---------- SATISFACTION ---------- */
+/* SATISFACTION */
 
 .satisfaction{
   padding:10px;
@@ -105,11 +103,11 @@ button{
   margin-bottom:10px;
 }
 
-.satText{
+.satLabels{
   display:flex;
   justify-content:space-between;
   font-size:10px;
-  color:#b6c2ca;
+  color:#aebbc5;
   margin-bottom:6px;
 }
 
@@ -119,36 +117,35 @@ button{
   gap:6px;
 }
 
-.gradient{
+.satBar{
   flex:1;
   height:14px;
   border-radius:20px;
   position:relative;
-  background:
-    linear-gradient(
-      90deg,
-      #16a34a 0%,
-      #84cc16 30%,
-      #facc15 52%,
-      #f97316 73%,
-      #dc2626 100%
-    );
+  background:linear-gradient(
+    90deg,
+    #16a34a 0%,
+    #84cc16 28%,
+    #facc15 52%,
+    #f97316 74%,
+    #dc2626 100%
+  );
 }
 
 .marker{
+  position:absolute;
+  top:50%;
+  left:10%;
   width:5px;
   height:23px;
   border-radius:5px;
   background:white;
-  position:absolute;
-  top:50%;
-  left:10%;
   transform:translate(-50%,-50%);
   transition:left .35s;
   box-shadow:0 0 7px #000;
 }
 
-.danger .gradient{
+.danger .satBar{
   animation:pulse .6s infinite alternate;
 }
 
@@ -156,13 +153,13 @@ button{
   to{filter:brightness(1.5)}
 }
 
-/* ---------- HOTEL ---------- */
+/* FLOOR */
 
 .floorTitle{
   text-align:center;
   font-size:10px;
   letter-spacing:3px;
-  color:#8fa2ae;
+  color:#91a5b1;
   margin:9px;
 }
 
@@ -172,19 +169,19 @@ button{
   gap:7px;
 }
 
-.roomColumn{
+.column{
   display:flex;
   flex-direction:column;
   gap:8px;
 }
 
 .corridor{
-  position:relative;
   min-height:410px;
+  position:relative;
   border-left:1px dashed rgba(255,255,255,.17);
   border-right:1px dashed rgba(255,255,255,.17);
-  background:rgba(255,255,255,.025);
   border-radius:9px;
+  background:rgba(255,255,255,.025);
 }
 
 .worker{
@@ -192,28 +189,28 @@ button{
   left:50%;
   top:46%;
   transform:translateX(-50%);
-  font-size:25px;
   text-align:center;
+  font-size:24px;
   transition:top .4s;
 }
 
-/* ---------- DOORS ---------- */
+/* ROOM DOORS */
 
-.room{
+.roomDoor{
   min-height:94px;
-  border:1px solid rgba(255,255,255,.12);
   border-radius:13px;
+  border:1px solid rgba(255,255,255,.12);
   background:linear-gradient(145deg,#263b47,#14252e);
   color:white;
   position:relative;
-  padding:8px 5px 6px;
+  padding:8px 5px;
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
 }
 
-.room:active{
+.roomDoor:active{
   transform:scale(.97);
 }
 
@@ -221,295 +218,313 @@ button{
   position:absolute;
   top:5px;
   left:7px;
-  font-size:11px;
-  font-weight:800;
   color:#adbbc4;
+  font-size:11px;
+  font-weight:900;
 }
 
-.roomIcon{
-  font-size:25px;
+.doorIcon{
+  font-size:26px;
 }
 
-.roomStatus{
+.doorText{
+  margin-top:4px;
   font-size:9px;
   font-weight:900;
-  margin-top:4px;
   text-align:center;
 }
 
-.room.clean{
-  border-color:rgba(250,204,21,.45);
+.roomDoor.clean{
+  border-color:rgba(250,204,21,.55);
 }
 
-.room.request{
+.roomDoor.request{
   border-color:#38bdf8;
 }
 
-.room.urgent{
-  border-color:#fb5b3d;
+.roomDoor.urgent{
+  border-color:#fb6040;
   animation:urgent 1s infinite alternate;
 }
 
-.room.dnd{
+.roomDoor.dnd{
   border-color:#ef4444;
   background:linear-gradient(145deg,#422329,#21171a);
 }
 
 @keyframes urgent{
-  to{box-shadow:0 0 15px rgba(255,75,50,.55)}
+  to{
+    box-shadow:0 0 15px rgba(255,75,50,.55);
+  }
 }
 
-.waitBar{
+.wait{
   position:absolute;
-  bottom:4px;
   left:5px;
   right:5px;
+  bottom:4px;
   height:4px;
   background:rgba(255,255,255,.1);
-  border-radius:5px;
+  border-radius:10px;
   overflow:hidden;
 }
 
-.waitBar div{
+.wait div{
   height:100%;
   background:linear-gradient(90deg,#22c55e,#facc15,#ef4444);
 }
 
-/* ---------- MESSAGE ---------- */
+/* MESSAGE */
 
 .message{
-  min-height:30px;
+  min-height:31px;
   padding-top:9px;
   color:#facc15;
   font-size:12px;
   text-align:center;
-  font-weight:700;
+  font-weight:800;
 }
 
-/* ---------- ROOM VIEW ---------- */
+/* ROOM INTERIOR */
 
-.roomView{
+.inside{
   position:absolute;
   inset:0;
-  z-index:10;
-  background:
-    linear-gradient(rgba(5,12,17,.95),rgba(5,12,17,.98));
+  z-index:15;
+  overflow-y:auto;
+
   padding:
     max(14px,env(safe-area-inset-top))
     13px
-    max(20px,env(safe-area-inset-bottom));
+    max(18px,env(safe-area-inset-bottom));
 
-  overflow-y:auto;
+  background:
+    radial-gradient(circle at top,#304b58,#0b1a22 50%,#061018);
 }
 
-.roomView.hidden{
-  display:none;
+.hidden{
+  display:none!important;
 }
 
-.roomHeader{
+.insideHeader{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
-.back{
-  border:0;
-  color:white;
-  background:rgba(255,255,255,.09);
-  border-radius:12px;
-  padding:10px 13px;
-}
-
-.roomTitle{
-  font-size:17px;
+.insideTitle{
+  font-size:18px;
   font-weight:900;
 }
 
-.guestCount{
+.guests{
+  color:#b7c4cc;
   font-size:12px;
-  color:#b9c6ce;
 }
 
-/* VISUAL ROOM */
+/* REQUEST */
 
-.roomScene{
-  background:
-    linear-gradient(160deg,#304956,#172a34);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:20px;
-  padding:13px;
-  margin-bottom:12px;
-}
-
-.sceneTop{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.object{
-  min-height:90px;
-  border-radius:14px;
-  padding:9px;
-  background:rgba(0,0,0,.18);
-  border:1px solid rgba(255,255,255,.08);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-}
-
-.objectIcon{
-  font-size:29px;
-}
-
-.objectName{
-  font-size:11px;
-  font-weight:800;
-  margin-top:4px;
-}
-
-.objectState{
-  font-size:9px;
-  margin-top:3px;
-  color:#aebdc6;
-}
-
-.object.good{
-  border-color:rgba(34,197,94,.35);
-}
-
-.object.bad{
-  border-color:rgba(239,68,68,.45);
-}
-
-.sceneBottom{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:9px;
-}
-
-.sceneBottom .object{
-  min-height:82px;
-}
-
-/* ---------- TASKS ---------- */
-
-.taskBox{
-  background:rgba(255,255,255,.065);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:17px;
-  padding:12px;
-}
-
-.taskTitle{
-  font-size:11px;
-  letter-spacing:1px;
-  color:#9fb0bb;
-  margin-bottom:9px;
-}
-
-.requestText{
-  padding:9px;
-  margin-bottom:9px;
-  border-radius:11px;
+.guestRequest{
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:13px;
   background:rgba(56,189,248,.1);
   border:1px solid rgba(56,189,248,.25);
   color:#d7f3ff;
   font-size:12px;
 }
 
-.task{
-  width:100%;
-  min-height:49px;
-  margin-bottom:7px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.1);
-  background:#1b2d37;
+.guestRequest:empty{
+  display:none;
+}
+
+/* ACTUAL ROOM */
+
+.roomScene{
+  position:relative;
+  min-height:480px;
+  border-radius:21px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.15);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(145deg,#334d58,#172c35);
+
+  background-size:28px 28px,28px 28px,auto;
+}
+
+/* WINDOW */
+
+.window{
+  position:absolute;
+  top:13px;
+  left:50%;
+  transform:translateX(-50%);
+  width:38%;
+  height:55px;
+  border-radius:8px;
+  background:linear-gradient(#77a9c0,#bcd9e6);
+  border:5px solid #253c47;
+}
+
+/* OBJECTS */
+
+.item{
+  position:absolute;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(9,22,28,.74);
   color:white;
+  border-radius:14px;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  padding:8px 11px;
-  gap:9px;
-  text-align:left;
+  justify-content:center;
+  text-align:center;
+  padding:5px;
+  transition:.2s;
 }
 
-.task:disabled{
-  opacity:.55;
+.item:active{
+  transform:scale(.95);
 }
 
-.task.done{
-  border-color:rgba(34,197,94,.4);
-  background:#173226;
+.item.bad{
+  border-color:rgba(239,68,68,.65);
 }
 
-.taskIcon{
-  font-size:22px;
-  width:28px;
+.item.good{
+  border-color:rgba(34,197,94,.42);
 }
 
-.taskName{
-  flex:1;
+.itemIcon{
+  font-size:30px;
+}
+
+.itemName{
+  font-size:10px;
+  font-weight:900;
+  margin-top:3px;
+}
+
+.itemState{
+  font-size:9px;
+  color:#b3c0c8;
+  margin-top:2px;
+}
+
+/* POSITIONS */
+
+.bed{
+  left:10%;
+  top:125px;
+  width:50%;
+  height:145px;
+}
+
+.mirror{
+  right:5%;
+  top:85px;
+  width:28%;
+  height:95px;
+}
+
+.towels{
+  right:5%;
+  top:195px;
+  width:28%;
+  height:90px;
+}
+
+.trash{
+  left:7%;
+  bottom:70px;
+  width:25%;
+  height:85px;
+}
+
+.floorItem{
+  left:37%;
+  bottom:70px;
+  width:27%;
+  height:85px;
+}
+
+.bath{
+  right:5%;
+  bottom:70px;
+  width:27%;
+  height:85px;
+}
+
+/* ACTION STATUS */
+
+.actionBox{
+  min-height:65px;
+  margin-top:10px;
+  padding:10px;
+  border-radius:14px;
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.actionText{
+  min-height:20px;
+  text-align:center;
   font-size:12px;
   font-weight:800;
+  color:#d6e2e8;
 }
-
-.taskTime{
-  font-size:10px;
-  color:#9fb0bb;
-}
-
-.finishRoom{
-  width:100%;
-  min-height:51px;
-  margin-top:5px;
-  border:0;
-  border-radius:14px;
-  font-weight:900;
-  font-size:14px;
-  background:white;
-  color:#071017;
-}
-
-.finishRoom:disabled{
-  opacity:.35;
-}
-
-/* ---------- ACTION PROGRESS ---------- */
 
 .actionProgress{
-  margin-top:10px;
   height:7px;
+  margin-top:8px;
   border-radius:10px;
   overflow:hidden;
-  background:rgba(255,255,255,.09);
+  background:rgba(255,255,255,.1);
 }
 
 .actionProgress div{
+  width:0%;
   height:100%;
-  width:0;
   background:#38bdf8;
 }
 
-/* ---------- OVERLAY ---------- */
+/* EXIT */
+
+.exitButton{
+  width:100%;
+  min-height:54px;
+  margin-top:10px;
+  border:0;
+  border-radius:15px;
+  background:white;
+  color:#071017;
+  font-size:15px;
+  font-weight:900;
+}
+
+/* OVERLAY */
 
 .overlay{
   position:absolute;
   inset:0;
   z-index:30;
-  background:rgba(3,9,13,.95);
-  backdrop-filter:blur(10px);
   display:flex;
   align-items:center;
   justify-content:center;
   padding:25px;
-}
-
-.overlay.hidden{
-  display:none;
+  background:rgba(3,9,13,.96);
+  backdrop-filter:blur(10px);
 }
 
 .panel{
@@ -519,17 +534,17 @@ button{
 }
 
 .panelIcon{
-  font-size:55px;
+  font-size:56px;
 }
 
 .panel h1{
-  margin:9px 0;
+  margin:8px 0;
 }
 
 .panel p{
   color:#9fb0bb;
-  line-height:1.5;
   font-size:13px;
+  line-height:1.5;
 }
 
 .mainButton{
@@ -540,8 +555,8 @@ button{
   border-radius:15px;
   background:white;
   color:#061018;
-  font-weight:900;
   font-size:15px;
+  font-weight:900;
 }
 
 .results{
@@ -553,9 +568,9 @@ button{
 .result{
   display:flex;
   justify-content:space-between;
-  background:rgba(255,255,255,.07);
-  border-radius:11px;
   padding:10px;
+  border-radius:11px;
+  background:rgba(255,255,255,.07);
   font-size:13px;
 }
 </style>
@@ -571,7 +586,6 @@ button{
   </div>
 
   <div class="stats">
-
     <div class="stat">
       <b id="cleaned">0</b>
       <span>🧹 НОМЕРОВ</span>
@@ -586,37 +600,29 @@ button{
       <b id="happy">0</b>
       <span>😊 ДОВОЛЬНЫ</span>
     </div>
-
   </div>
 
   <div class="satisfaction" id="satBox">
-
-    <div class="satText">
+    <div class="satLabels">
       <span>ДОВОЛЬСТВО</span>
       <span>НЕДОВОЛЬСТВО</span>
     </div>
 
     <div class="satRow">
-
       <span>😊</span>
 
-      <div class="gradient">
+      <div class="satBar">
         <div class="marker" id="marker"></div>
       </div>
 
       <span>😡</span>
-
     </div>
-
   </div>
 
-  <div class="floorTitle">
-    ЭТАЖ 1
-  </div>
+  <div class="floorTitle">ЭТАЖ 1</div>
 
   <div class="floor">
-
-    <div class="roomColumn" id="left"></div>
+    <div class="column" id="left"></div>
 
     <div class="corridor">
       <div class="worker" id="worker">
@@ -624,60 +630,100 @@ button{
       </div>
     </div>
 
-    <div class="roomColumn" id="right"></div>
-
+    <div class="column" id="right"></div>
   </div>
 
   <div class="message" id="message"></div>
 
-  <!-- ROOM VIEW -->
+  <!-- INSIDE ROOM -->
 
-  <div class="roomView hidden" id="roomView">
+  <div class="inside hidden" id="inside">
 
-    <div class="roomHeader">
-
-      <button class="back" id="backButton">
-        ‹ Коридор
-      </button>
-
+    <div class="insideHeader">
       <div>
-        <div class="roomTitle" id="insideNumber">
+        <div class="insideTitle" id="insideTitle">
           Номер
         </div>
 
-        <div class="guestCount" id="insideGuests"></div>
+        <div class="guests" id="guestInfo"></div>
       </div>
+
+      <div id="insideClock" class="clock">
+        08:00
+      </div>
+    </div>
+
+    <div class="guestRequest" id="guestRequest"></div>
+
+    <div class="roomScene">
+
+      <div class="window"></div>
+
+      <button class="item bed"
+      id="bedItem">
+        <span class="itemIcon">🛏️</span>
+        <span class="itemName">Кровать</span>
+        <span class="itemState"></span>
+      </button>
+
+      <button class="item mirror"
+      id="mirrorItem">
+        <span class="itemIcon">🪞</span>
+        <span class="itemName">Зеркало</span>
+        <span class="itemState"></span>
+      </button>
+
+      <button class="item towels"
+      id="towelItem">
+        <span class="itemIcon">🧺</span>
+        <span class="itemName">Полотенца</span>
+        <span class="itemState"></span>
+      </button>
+
+      <button class="item trash"
+      id="trashItem">
+        <span class="itemIcon">🗑️</span>
+        <span class="itemName">Мусор</span>
+        <span class="itemState"></span>
+      </button>
+
+      <button class="item floorItem"
+      id="floorItem">
+        <span class="itemIcon">🧹</span>
+        <span class="itemName">Пол</span>
+        <span class="itemState"></span>
+      </button>
+
+      <button class="item bath"
+      id="bathItem">
+        <span class="itemIcon">🚿</span>
+        <span class="itemName">Ванная</span>
+        <span class="itemState"></span>
+      </button>
 
     </div>
 
-    <div class="roomScene" id="roomScene"></div>
+    <div class="actionBox">
 
-    <div class="taskBox">
-
-      <div class="taskTitle">
-        ЗАДАЧИ В НОМЕРЕ
+      <div class="actionText" id="actionText">
+        Осмотрите номер
       </div>
-
-      <div id="requestText"></div>
-
-      <div id="tasks"></div>
 
       <div class="actionProgress">
         <div id="actionBar"></div>
       </div>
 
-      <button class="finishRoom"
-      id="finishRoom" disabled>
-        НОМЕР ГОТОВ
-      </button>
-
     </div>
+
+    <button class="exitButton" id="exitRoom">
+      🚪 ВЫЙТИ ИЗ НОМЕРА
+    </button>
 
   </div>
 
   <!-- START -->
 
-  <div class="overlay" id="start">
+  <div class="overlay" id="startScreen">
 
     <div class="panel">
 
@@ -686,13 +732,12 @@ button{
       <h1>MaDen Hotel</h1>
 
       <p>
-        Осматривай номера и выполняй только то,
-        что действительно требуется.
-        Следи за просьбами гостей и не допускай
-        критического недовольства.
+        Следите за номерами, выполняйте уборку
+        и просьбы гостей. Решайте сами,
+        что необходимо сделать.
       </p>
 
-      <button class="mainButton" id="startBtn">
+      <button class="mainButton" id="startButton">
         НАЧАТЬ СМЕНУ
       </button>
 
@@ -711,8 +756,8 @@ button{
       <h1>Смена завершена</h1>
 
       <p>
-        Недовольство гостей достигло
-        критического уровня.
+        Уровень недовольства гостей
+        достиг критической отметки.
       </p>
 
       <div class="results">
@@ -733,1156 +778,4 @@ button{
         </div>
 
         <div class="result">
-          <span>🏆 Рекорд</span>
-          <b id="record">0</b>
-        </div>
-
-      </div>
-
-      <button class="mainButton" id="restart">
-        ЕЩЁ РАЗ
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<script>
-const numbers=[
-  101,102,103,104,
-  105,106,107,108
-];
-
-let rooms=[];
-
-let running=false;
-let busy=false;
-
-let score=0;
-let cleaned=0;
-let happy=0;
-
-let dissatisfaction=10;
-
-let gameMinutes=480;
-
-let selectedRoom=null;
-
-let tickTimer=null;
-let requestTimer=null;
-
-
-/* ELEMENTS */
-
-const left=document.getElementById("left");
-const right=document.getElementById("right");
-
-const clock=document.getElementById("clock");
-
-const scoreEl=document.getElementById("score");
-const cleanedEl=document.getElementById("cleaned");
-const happyEl=document.getElementById("happy");
-
-const marker=document.getElementById("marker");
-const satBox=document.getElementById("satBox");
-
-const worker=document.getElementById("worker");
-const message=document.getElementById("message");
-
-const roomView=document.getElementById("roomView");
-
-const insideNumber=
-document.getElementById("insideNumber");
-
-const insideGuests=
-document.getElementById("insideGuests");
-
-const roomScene=
-document.getElementById("roomScene");
-
-const requestText=
-document.getElementById("requestText");
-
-const tasks=
-document.getElementById("tasks");
-
-const finishRoom=
-document.getElementById("finishRoom");
-
-const actionBar=
-document.getElementById("actionBar");
-
-
-/* CREATE ROOMS */
-
-function resetRooms(){
-
-  rooms=numbers.map((number,index)=>({
-
-    number,
-    index,
-
-    status:"ready",
-
-    guests:
-      Math.random()<.55 ? 2 : 1,
-
-    waiting:0,
-
-    request:null,
-
-    conditions:null
-
-  }));
-
-  renderHotel();
-}
-
-
-/* RANDOM ROOM CONDITION */
-
-function createFullCleaning(room){
-
-  room.status="clean";
-
-  room.guests=
-    Math.random()<.55 ? 2 : 1;
-
-  room.waiting=0;
-
-  room.request="После выезда требуется уборка";
-
-  room.conditions={
-
-    bed:
-      Math.random()<.9,
-
-    mirror:
-      Math.random()<.48,
-
-    trash:
-      Math.random()<.78,
-
-    floor:
-      Math.random()<.7,
-
-    towelsDirty:
-      room.guests,
-
-    towelsClean:0
-
-  };
-
-}
-
-
-function createSmallRequest(room){
-
-  room.status="request";
-
-  room.waiting=0;
-
-  room.guests=
-    Math.random()<.55 ? 2 : 1;
-
-  const types=[
-    "towels",
-    "trash",
-    "mirror"
-  ];
-
-  const type=
-    types[
-      Math.floor(Math.random()*types.length)
-    ];
-
-  if(type==="towels"){
-
-    room.request=
-      room.guests===2
-      ? "Гости просят заменить 2 полотенца"
-      : "Гость просит заменить полотенце";
-
-    room.conditions={
-
-      bed:false,
-      mirror:false,
-      trash:false,
-      floor:false,
-
-      towelsDirty:room.guests,
-      towelsClean:0
-    };
-
-  }
-
-  if(type==="trash"){
-
-    room.request=
-      "Гость просит забрать мусор";
-
-    room.conditions={
-
-      bed:false,
-      mirror:false,
-      trash:true,
-      floor:false,
-
-      towelsDirty:0,
-      towelsClean:0
-    };
-
-  }
-
-  if(type==="mirror"){
-
-    room.request=
-      "Гость просит почистить зеркало";
-
-    room.conditions={
-
-      bed:false,
-      mirror:true,
-      trash:false,
-      floor:false,
-
-      towelsDirty:0,
-      towelsClean:0
-    };
-
-  }
-
-}
-
-
-/* RENDER HOTEL */
-
-function renderHotel(){
-
-  left.innerHTML="";
-  right.innerHTML="";
-
-  rooms.forEach((room,i)=>{
-
-    const button=
-      document.createElement("button");
-
-    button.className=
-      "room "+room.status;
-
-    let icon="🟢";
-    let text="ГОТОВ";
-
-    if(room.status==="clean"){
-      icon="🧹";
-      text="УБОРКА";
-    }
-
-    if(room.status==="request"){
-      icon="🛎️";
-      text="ПРОСЬБА ГОСТЯ";
-    }
-
-    if(room.status==="urgent"){
-      icon="⚠️";
-      text="СРОЧНО";
-    }
-
-    if(room.status==="dnd"){
-      icon="⛔";
-      text="НЕ БЕСПОКОИТЬ";
-    }
-
-    button.innerHTML=`
-      <div class="roomNumber">
-        ${room.number}
-      </div>
-
-      <div class="roomIcon">
-        ${icon}
-      </div>
-
-      <div class="roomStatus">
-        ${text}
-      </div>
-
-      ${
-        room.status!=="ready" &&
-        room.status!=="dnd"
-
-        ?`
-
-        <div class="waitBar">
-          <div style="
-          width:${Math.min(room.waiting,100)}%">
-          </div>
-        </div>
-
-        `:""
-      }
-    `;
-
-    button.addEventListener(
-      "click",
-      ()=>openRoom(room)
-    );
-
-    if(i%2===0)
-      left.appendChild(button);
-    else
-      right.appendChild(button);
-
-  });
-
-}
-
-
-/* OPEN ROOM */
-
-function openRoom(room){
-
-  if(!running || busy)
-    return;
-
-  if(room.status==="ready"){
-
-    say("✓ Номер уже готов");
-    return;
-
-  }
-
-  if(room.status==="dnd"){
-
-    satisfaction(6);
-
-    say(
-      "⛔ Гость просил не беспокоить"
-    );
-
-    return;
-  }
-
-  selectedRoom=room;
-
-  moveWorker(room);
-
-  roomView.classList.remove("hidden");
-
-  renderInside();
-}
-
-
-/* MOVE WORKER */
-
-function moveWorker(room){
-
-  const row=
-    Math.floor(room.index/2);
-
-  const positions=[
-    5,29,53,77
-  ];
-
-  worker.style.top=
-    positions[row]+"%";
-}
-
-
-/* RENDER ROOM */
-
-function renderInside(){
-
-  const r=selectedRoom;
-
-  if(!r) return;
-
-  insideNumber.textContent=
-    "Номер "+r.number;
-
-  insideGuests.textContent=
-    r.guests===2
-    ?"👥 2 гостя"
-    :"👤 1 гость";
-
-  requestText.innerHTML=
-    r.request
-    ?`
-      <div class="requestText">
-        🛎️ ${r.request}
-      </div>
-    `
-    :"";
-
-  const c=r.conditions;
-
-  roomScene.innerHTML=`
-
-    <div class="sceneTop">
-
-      ${objectHTML(
-        "🛏",
-        "Кровать",
-        c.bed,
-        "Нужно перестелить",
-        "В порядке"
-      )}
-
-      ${objectHTML(
-        "🪞",
-        "Зеркало",
-        c.mirror,
-        "Нужно почистить",
-        "Чисто"
-      )}
-
-    </div>
-
-    <div class="sceneBottom">
-
-      ${objectHTML(
-        "🗑️",
-        "Мусор",
-        c.trash,
-        "Нужно убрать",
-        "Пусто"
-      )}
-
-      ${objectHTML(
-        "🧺",
-        "Полотенца",
-        c.towelsDirty>0 ||
-        c.towelsClean<r.guests &&
-        r.request?.includes("полотен"),
-
-        c.towelsDirty>0
-        ?`${c.towelsDirty} грязн.`
-        :"Заменены",
-
-        "В порядке"
-      )}
-
-      ${objectHTML(
-        "🧹",
-        "Пол",
-        c.floor,
-        "Нужно помыть",
-        "Чисто"
-      )}
-
-    </div>
-  `;
-
-  renderTasks();
-}
-
-
-function objectHTML(
-  icon,
-  name,
-  bad,
-  badText,
-  goodText
-){
-
-  return`
-    <div class="object ${bad?"bad":"good"}">
-
-      <div class="objectIcon">
-        ${icon}
-      </div>
-
-      <div class="objectName">
-        ${name}
-      </div>
-
-      <div class="objectState">
-        ${bad?badText:goodText}
-      </div>
-
-    </div>
-  `;
-}
-
-
-/* TASKS */
-
-function renderTasks(){
-
-  const r=selectedRoom;
-  const c=r.conditions;
-
-  tasks.innerHTML="";
-
-  let count=0;
-
-
-  if(c.towelsDirty>0){
-
-    addTask(
-      "🧺",
-      `Забрать грязные полотенца ×${c.towelsDirty}`,
-      ()=>{
-        c.towelsDirty=0;
-      }
-    );
-
-    count++;
-  }
-
-
-  /*
-  После того как грязные полотенца
-  забраны, появляется задача
-  принести такое же количество чистых.
-  */
-
-  const needsTowels=
-    r.request &&
-    r.request.toLowerCase()
-      .includes("полотен");
-
-  const fullClean=
-    r.request &&
-    r.request.includes("выезда");
-
-
-  if(
-    c.towelsDirty===0 &&
-    c.towelsClean<r.guests &&
-    (needsTowels || fullClean)
-  ){
-
-    const amount=
-      r.guests-c.towelsClean;
-
-    addTask(
-      "🤍",
-      `Положить чистые полотенца ×${amount}`,
-      ()=>{
-        c.towelsClean=r.guests;
-      }
-    );
-
-    count++;
-  }
-
-
-  if(c.bed){
-
-    addTask(
-      "🛏",
-      "Перестелить кровать",
-      ()=>{
-        c.bed=false;
-      }
-    );
-
-    count++;
-  }
-
-
-  if(c.trash){
-
-    addTask(
-      "🗑️",
-      "Убрать мусор",
-      ()=>{
-        c.trash=false;
-      }
-    );
-
-    count++;
-  }
-
-
-  if(c.mirror){
-
-    addTask(
-      "🪞",
-      "Почистить зеркало",
-      ()=>{
-        c.mirror=false;
-      }
-    );
-
-    count++;
-  }
-
-
-  if(c.floor){
-
-    addTask(
-      "🧹",
-      "Помыть пол",
-      ()=>{
-        c.floor=false;
-      }
-    );
-
-    count++;
-  }
-
-
-  if(count===0){
-
-    tasks.innerHTML=`
-      <div style="
-      text-align:center;
-      padding:12px;
-      color:#86efac;
-      font-size:13px;
-      font-weight:800">
-        ✓ Всё необходимое выполнено
-      </div>
-    `;
-
-    finishRoom.disabled=false;
-
-  }else{
-
-    finishRoom.disabled=true;
-  }
-
-}
-
-
-/* ADD TASK */
-
-function addTask(
-  icon,
-  name,
-  callback
-){
-
-  const button=
-    document.createElement("button");
-
-  button.className="task";
-
-  button.innerHTML=`
-
-    <span class="taskIcon">
-      ${icon}
-    </span>
-
-    <span class="taskName">
-      ${name}
-    </span>
-
-    <span class="taskTime">
-      выполнить
-    </span>
-  `;
-
-  button.addEventListener(
-    "click",
-    ()=>performTask(
-      button,
-      callback
-    )
-  );
-
-  tasks.appendChild(button);
-}
-
-
-/* PERFORM ACTION */
-
-function performTask(
-  button,
-  callback
-){
-
-  if(busy) return;
-
-  busy=true;
-
-  const all=
-    tasks.querySelectorAll("button");
-
-  all.forEach(
-    b=>b.disabled=true
-  );
-
-  actionBar.style.width="0%";
-
-  let progress=0;
-
-  const timer=
-    setInterval(()=>{
-
-      if(!running){
-
-        clearInterval(timer);
-        return;
-      }
-
-      progress+=10;
-
-      actionBar.style.width=
-        progress+"%";
-
-      if(progress>=100){
-
-        clearInterval(timer);
-
-        callback();
-
-        score+=20;
-
-        scoreEl.textContent=score;
-
-        /*
-        Каждое действие занимает
-        5 игровых минут.
-        */
-
-        gameMinutes+=5;
-
-        updateClockDisplay();
-
-        busy=false;
-
-        actionBar.style.width="0%";
-
-        renderInside();
-
-      }
-
-    },55);
-
-}
-
-
-/* COMPLETE ROOM */
-
-finishRoom.addEventListener(
-  "click",
-  ()=>{
-
-    if(
-      !selectedRoom ||
-      busy
-    ) return;
-
-    const urgent=
-      selectedRoom.status==="urgent";
-
-    selectedRoom.status="ready";
-    selectedRoom.waiting=0;
-    selectedRoom.request=null;
-    selectedRoom.conditions=null;
-
-    cleaned++;
-    happy++;
-
-    const bonus=
-      urgent ? 180 : 120;
-
-    score+=bonus;
-
-    satisfaction(
-      urgent ? -13 : -9
-    );
-
-    cleanedEl.textContent=cleaned;
-    happyEl.textContent=happy;
-    scoreEl.textContent=score;
-
-    say(
-      urgent
-      ?`⭐ Срочный номер выполнен +${bonus}`
-      :`😊 Гость доволен +${bonus}`
-    );
-
-    selectedRoom=null;
-
-    roomView.classList.add("hidden");
-
-    renderHotel();
-
-  }
-);
-
-
-/* BACK */
-
-document.getElementById(
-  "backButton"
-).addEventListener(
-  "click",
-  ()=>{
-
-    if(busy) return;
-
-    roomView.classList.add("hidden");
-
-    selectedRoom=null;
-
-  }
-);
-
-
-/* NEW EVENT */
-
-function generateEvent(){
-
-  if(!running) return;
-
-  const available=
-    rooms.filter(
-      r=>r.status==="ready"
-    );
-
-  if(!available.length)
-    return;
-
-  const room=
-    available[
-      Math.floor(
-        Math.random()*available.length
-      )
-    ];
-
-  const chance=Math.random();
-
-
-  /*
-  Не беспокоить
-  */
-
-  if(chance<.18){
-
-    room.status="dnd";
-
-    renderHotel();
-
-    setTimeout(()=>{
-
-      if(
-        running &&
-        room.status==="dnd"
-      ){
-
-        createFullCleaning(room);
-
-        say(
-          `🧹 Номер ${room.number} освободился`
-        );
-
-        renderHotel();
-      }
-
-    },4500);
-
-    return;
-  }
-
-
-  /*
-  Просьба гостя
-  */
-
-  if(chance<.53){
-
-    createSmallRequest(room);
-
-  }else{
-
-    createFullCleaning(room);
-  }
-
-  renderHotel();
-}
-
-
-/* WAITING */
-
-function updateWaiting(){
-
-  rooms.forEach(room=>{
-
-    if(
-      room.status==="clean" ||
-      room.status==="request" ||
-      room.status==="urgent"
-    ){
-
-      room.waiting+=1.1;
-
-      if(
-        room.waiting>=58 &&
-        room.status!=="urgent"
-      ){
-
-        room.status="urgent";
-
-        say(
-          `⚠️ Номер ${room.number} ждёт!`
-        );
-      }
-
-
-      if(room.waiting>25)
-        satisfaction(.12);
-
-      if(room.waiting>55)
-        satisfaction(.22);
-
-      if(room.waiting>80)
-        satisfaction(.34);
-
-    }
-
-  });
-
-  renderHotel();
-}
-
-
-/* SATISFACTION */
-
-function satisfaction(amount){
-
-  dissatisfaction+=amount;
-
-  dissatisfaction=
-    Math.max(
-      0,
-      Math.min(
-        100,
-        dissatisfaction
-      )
-    );
-
-  marker.style.left=
-    dissatisfaction+"%";
-
-  if(dissatisfaction>=72)
-    satBox.classList.add("danger");
-  else
-    satBox.classList.remove("danger");
-
-
-  if(dissatisfaction>=100)
-    endGame();
-
-}
-
-
-/* CLOCK */
-
-function updateClockDisplay(){
-
-  const h=
-    Math.floor(gameMinutes/60)%24;
-
-  const m=
-    gameMinutes%60;
-
-  clock.textContent=
-    String(h).padStart(2,"0")
-    +":"+
-    String(m).padStart(2,"0");
-}
-
-
-/* MESSAGE */
-
-function say(text){
-
-  message.textContent=text;
-
-  clearTimeout(say.timer);
-
-  say.timer=setTimeout(
-    ()=>message.textContent="",
-    2300
-  );
-}
-
-
-/* START */
-
-function startGame(){
-
-  clearInterval(tickTimer);
-  clearInterval(requestTimer);
-
-  running=true;
-  busy=false;
-
-  score=0;
-  cleaned=0;
-  happy=0;
-
-  dissatisfaction=10;
-
-  gameMinutes=480;
-
-  selectedRoom=null;
-
-  scoreEl.textContent=0;
-  cleanedEl.textContent=0;
-  happyEl.textContent=0;
-
-  marker.style.left="10%";
-
-  satBox.classList.remove("danger");
-
-  updateClockDisplay();
-
-  resetRooms();
-
-  document.getElementById(
-    "start"
-  ).classList.add("hidden");
-
-  document.getElementById(
-    "gameOver"
-  ).classList.add("hidden");
-
-
-  /*
-  Первое событие
-  */
-
-  setTimeout(
-    ()=>{
-      if(running)
-        generateEvent();
-    },
-    1000
-  );
-
-
-  /*
-  Игровые часы:
-  +5 минут каждую секунду
-  */
-
-  tickTimer=setInterval(
-    ()=>{
-
-      if(!running) return;
-
-      gameMinutes+=5;
-
-      updateClockDisplay();
-
-      updateWaiting();
-
-    },
-    1000
-  );
-
-
-  /*
-  Новый запрос
-  */
-
-  requestTimer=setInterval(
-    ()=>{
-      if(running)
-        generateEvent();
-    },
-    4200
-  );
-
-}
-
-
-/* GAME OVER */
-
-function endGame(){
-
-  if(!running)
-    return;
-
-  running=false;
-  busy=false;
-
-  clearInterval(tickTimer);
-  clearInterval(requestTimer);
-
-  roomView.classList.add("hidden");
-
-  document.getElementById(
-    "finalCleaned"
-  ).textContent=cleaned;
-
-  document.getElementById(
-    "finalScore"
-  ).textContent=score;
-
-  document.getElementById(
-    "finalHappy"
-  ).textContent=happy;
-
-
-  let record=0;
-
-  try{
-
-    record=
-      Number(
-        localStorage.getItem(
-          "madenHotelRecord"
-        )
-      )||0;
-
-    if(score>record){
-
-      record=score;
-
-      localStorage.setItem(
-        "madenHotelRecord",
-        record
-      );
-
-    }
-
-  }catch(e){}
-
-
-  document.getElementById(
-    "record"
-  ).textContent=record;
-
-
-  document.getElementById(
-    "gameOver"
-  ).classList.remove("hidden");
-
-}
-
-
-/* BUTTONS */
-
-document.getElementById(
-  "startBtn"
-).addEventListener(
-  "click",
-  startGame
-);
-
-document.getElementById(
-  "restart"
-).addEventListener(
-  "click",
-  startGame
-);
-
-
-/* INITIAL */
-
-marker.style.left="10%";
-
-resetRooms();
-
-</script>
-
-</body>
-</html>
+          <span>🏆 Р
