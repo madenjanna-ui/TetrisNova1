@@ -5,8 +5,7 @@
 <meta name="viewport"
 content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 
-<meta name="theme-color" content="#101820">
-
+<meta name="theme-color" content="#071017">
 <title>MaDen Hotel</title>
 
 <style>
@@ -18,9 +17,9 @@ content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,vie
 html,body{
   margin:0;
   min-height:100%;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  background:#071017;
-  color:white;
+  background:#061018;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
 
 body{
@@ -28,330 +27,489 @@ body{
   justify-content:center;
 }
 
+button{
+  font:inherit;
+}
+
 #game{
   width:min(100%,520px);
   min-height:100dvh;
-  background:
-    linear-gradient(rgba(5,12,18,.82),rgba(5,12,18,.94)),
-    radial-gradient(circle at top,#294557,#071017 60%);
   position:relative;
   overflow:hidden;
+
+  background:
+    radial-gradient(circle at 50% 0,#244557 0,#0d1d27 38%,#061018 100%);
+
   padding:
     max(14px,env(safe-area-inset-top))
-    14px
-    max(18px,env(safe-area-inset-bottom));
+    13px
+    max(20px,env(safe-area-inset-bottom));
 }
 
-/* HEADER */
+/* ---------- HEADER ---------- */
 
-.top{
+.header{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  margin-bottom:10px;
+  align-items:center;
+  margin-bottom:9px;
 }
 
-.hotel{
+.logo{
+  font-weight:900;
   font-size:18px;
-  font-weight:800;
-  letter-spacing:.5px;
 }
 
-.time{
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.12);
+.clock{
   padding:7px 12px;
-  border-radius:14px;
+  border-radius:13px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.1);
   font-weight:800;
-  font-variant-numeric:tabular-nums;
 }
 
-/* STATS */
+/* ---------- STATS ---------- */
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-bottom:12px;
+  gap:7px;
+  margin-bottom:9px;
 }
 
 .stat{
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:14px;
-  padding:8px 4px;
+  padding:8px 3px;
   text-align:center;
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:13px;
 }
 
-.stat strong{
+.stat b{
   display:block;
-  font-size:18px;
+  font-size:17px;
 }
 
 .stat span{
-  display:block;
-  margin-top:2px;
-  color:#aebbc5;
-  font-size:10px;
+  font-size:9px;
+  color:#aab8c2;
 }
 
-/* SATISFACTION */
+/* ---------- SATISFACTION ---------- */
 
 .satisfaction{
-  background:rgba(255,255,255,.07);
+  padding:10px;
+  border-radius:14px;
+  background:rgba(255,255,255,.065);
   border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  padding:11px;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
-.satTitle{
+.satText{
   display:flex;
   justify-content:space-between;
-  font-size:11px;
-  color:#c9d3da;
-  margin-bottom:7px;
+  font-size:10px;
+  color:#b6c2ca;
+  margin-bottom:6px;
 }
 
-.satLine{
+.satRow{
   display:flex;
   align-items:center;
-  gap:7px;
+  gap:6px;
 }
 
-.face{
-  font-size:19px;
-}
-
-.bar{
+.gradient{
   flex:1;
-  height:16px;
-  border-radius:999px;
+  height:14px;
+  border-radius:20px;
+  position:relative;
   background:
     linear-gradient(
       90deg,
-      #22c55e 0%,
+      #16a34a 0%,
       #84cc16 30%,
       #facc15 52%,
-      #f97316 72%,
-      #ef4444 100%
+      #f97316 73%,
+      #dc2626 100%
     );
-  position:relative;
-  border:2px solid rgba(255,255,255,.18);
 }
 
-.pointer{
-  position:absolute;
-  top:50%;
+.marker{
   width:5px;
-  height:24px;
+  height:23px;
   border-radius:5px;
   background:white;
+  position:absolute;
+  top:50%;
+  left:10%;
   transform:translate(-50%,-50%);
-  box-shadow:0 0 7px rgba(0,0,0,.8);
-  transition:left .45s ease;
+  transition:left .35s;
+  box-shadow:0 0 7px #000;
 }
 
-.satisfaction.danger .bar{
-  animation:dangerPulse .65s infinite alternate;
+.danger .gradient{
+  animation:pulse .6s infinite alternate;
 }
 
-@keyframes dangerPulse{
-  from{filter:brightness(1)}
+@keyframes pulse{
   to{filter:brightness(1.5)}
 }
 
-/* FLOOR */
+/* ---------- HOTEL ---------- */
 
-.floorLabel{
+.floorTitle{
   text-align:center;
-  color:#9fb0bb;
-  font-size:11px;
-  letter-spacing:2px;
-  margin:5px 0 8px;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#8fa2ae;
+  margin:9px;
 }
 
 .floor{
   display:grid;
-  grid-template-columns:1fr 52px 1fr;
+  grid-template-columns:1fr 48px 1fr;
   gap:7px;
 }
 
-.rooms{
+.roomColumn{
   display:flex;
   flex-direction:column;
-  gap:9px;
+  gap:8px;
 }
 
 .corridor{
   position:relative;
-  border-left:1px dashed rgba(255,255,255,.18);
-  border-right:1px dashed rgba(255,255,255,.18);
-  border-radius:10px;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.025),
-      rgba(255,255,255,.09),
-      rgba(255,255,255,.025)
-    );
-  min-height:400px;
+  min-height:410px;
+  border-left:1px dashed rgba(255,255,255,.17);
+  border-right:1px dashed rgba(255,255,255,.17);
+  background:rgba(255,255,255,.025);
+  border-radius:9px;
 }
 
-.cart{
+.worker{
   position:absolute;
-  width:44px;
-  text-align:center;
-  font-size:25px;
   left:50%;
+  top:46%;
   transform:translateX(-50%);
-  top:48%;
-  transition:top .45s ease;
+  font-size:25px;
+  text-align:center;
+  transition:top .4s;
 }
 
-/* ROOMS */
+/* ---------- DOORS ---------- */
 
 .room{
-  height:92px;
-  border-radius:14px;
-  background:linear-gradient(145deg,#263944,#15242d);
-  border:1px solid rgba(255,255,255,.13);
+  min-height:94px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:13px;
+  background:linear-gradient(145deg,#263b47,#14252e);
   color:white;
-  padding:7px;
+  position:relative;
+  padding:8px 5px 6px;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
-  cursor:pointer;
-  position:relative;
-  overflow:hidden;
-  box-shadow:0 5px 15px rgba(0,0,0,.16);
+  align-items:center;
 }
 
 .room:active{
   transform:scale(.97);
 }
 
-.number{
+.roomNumber{
   position:absolute;
   top:5px;
   left:7px;
   font-size:11px;
-  color:#aebbc5;
   font-weight:800;
+  color:#adbbc4;
 }
 
 .roomIcon{
-  font-size:27px;
-  line-height:1;
-  margin-bottom:5px;
+  font-size:25px;
 }
 
-.roomText{
-  font-size:10px;
-  font-weight:800;
+.roomStatus{
+  font-size:9px;
+  font-weight:900;
+  margin-top:4px;
   text-align:center;
-}
-
-.room.ready{
-  border-color:rgba(34,197,94,.4);
 }
 
 .room.clean{
-  border-color:rgba(250,204,21,.55);
+  border-color:rgba(250,204,21,.45);
 }
 
-.room.dnd{
-  border-color:rgba(239,68,68,.42);
-  background:linear-gradient(145deg,#40252a,#21181b);
+.room.request{
+  border-color:#38bdf8;
 }
 
 .room.urgent{
-  border-color:#ff633f;
-  background:linear-gradient(145deg,#4b2922,#241a18);
+  border-color:#fb5b3d;
   animation:urgent 1s infinite alternate;
 }
 
-@keyframes urgent{
-  from{box-shadow:0 0 0 rgba(255,75,45,0)}
-  to{box-shadow:0 0 16px rgba(255,75,45,.55)}
+.room.dnd{
+  border-color:#ef4444;
+  background:linear-gradient(145deg,#422329,#21171a);
 }
 
-.roomProgress{
+@keyframes urgent{
+  to{box-shadow:0 0 15px rgba(255,75,50,.55)}
+}
+
+.waitBar{
   position:absolute;
+  bottom:4px;
   left:5px;
   right:5px;
-  bottom:5px;
   height:4px;
+  background:rgba(255,255,255,.1);
   border-radius:5px;
-  background:rgba(255,255,255,.1);
   overflow:hidden;
 }
 
-.roomProgress div{
+.waitBar div{
   height:100%;
-  width:0%;
-  background:#facc15;
+  background:linear-gradient(90deg,#22c55e,#facc15,#ef4444);
 }
 
-/* CURRENT JOB */
-
-.job{
-  margin-top:12px;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:16px;
-  padding:11px;
-  min-height:75px;
-}
-
-.jobTitle{
-  font-size:12px;
-  color:#aebbc5;
-}
-
-.jobMain{
-  margin-top:4px;
-  font-size:15px;
-  font-weight:800;
-}
-
-.jobProgress{
-  height:7px;
-  background:rgba(255,255,255,.1);
-  border-radius:8px;
-  overflow:hidden;
-  margin-top:9px;
-}
-
-.jobProgress div{
-  height:100%;
-  width:0%;
-  background:#38bdf8;
-  transition:width .2s linear;
-}
+/* ---------- MESSAGE ---------- */
 
 .message{
-  height:24px;
-  margin-top:7px;
-  text-align:center;
+  min-height:30px;
+  padding-top:9px;
   color:#facc15;
   font-size:12px;
+  text-align:center;
   font-weight:700;
 }
 
-/* START / GAME OVER */
+/* ---------- ROOM VIEW ---------- */
+
+.roomView{
+  position:absolute;
+  inset:0;
+  z-index:10;
+  background:
+    linear-gradient(rgba(5,12,17,.95),rgba(5,12,17,.98));
+  padding:
+    max(14px,env(safe-area-inset-top))
+    13px
+    max(20px,env(safe-area-inset-bottom));
+
+  overflow-y:auto;
+}
+
+.roomView.hidden{
+  display:none;
+}
+
+.roomHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.back{
+  border:0;
+  color:white;
+  background:rgba(255,255,255,.09);
+  border-radius:12px;
+  padding:10px 13px;
+}
+
+.roomTitle{
+  font-size:17px;
+  font-weight:900;
+}
+
+.guestCount{
+  font-size:12px;
+  color:#b9c6ce;
+}
+
+/* VISUAL ROOM */
+
+.roomScene{
+  background:
+    linear-gradient(160deg,#304956,#172a34);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  padding:13px;
+  margin-bottom:12px;
+}
+
+.sceneTop{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.object{
+  min-height:90px;
+  border-radius:14px;
+  padding:9px;
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.objectIcon{
+  font-size:29px;
+}
+
+.objectName{
+  font-size:11px;
+  font-weight:800;
+  margin-top:4px;
+}
+
+.objectState{
+  font-size:9px;
+  margin-top:3px;
+  color:#aebdc6;
+}
+
+.object.good{
+  border-color:rgba(34,197,94,.35);
+}
+
+.object.bad{
+  border-color:rgba(239,68,68,.45);
+}
+
+.sceneBottom{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:9px;
+}
+
+.sceneBottom .object{
+  min-height:82px;
+}
+
+/* ---------- TASKS ---------- */
+
+.taskBox{
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:17px;
+  padding:12px;
+}
+
+.taskTitle{
+  font-size:11px;
+  letter-spacing:1px;
+  color:#9fb0bb;
+  margin-bottom:9px;
+}
+
+.requestText{
+  padding:9px;
+  margin-bottom:9px;
+  border-radius:11px;
+  background:rgba(56,189,248,.1);
+  border:1px solid rgba(56,189,248,.25);
+  color:#d7f3ff;
+  font-size:12px;
+}
+
+.task{
+  width:100%;
+  min-height:49px;
+  margin-bottom:7px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#1b2d37;
+  color:white;
+  display:flex;
+  align-items:center;
+  padding:8px 11px;
+  gap:9px;
+  text-align:left;
+}
+
+.task:disabled{
+  opacity:.55;
+}
+
+.task.done{
+  border-color:rgba(34,197,94,.4);
+  background:#173226;
+}
+
+.taskIcon{
+  font-size:22px;
+  width:28px;
+}
+
+.taskName{
+  flex:1;
+  font-size:12px;
+  font-weight:800;
+}
+
+.taskTime{
+  font-size:10px;
+  color:#9fb0bb;
+}
+
+.finishRoom{
+  width:100%;
+  min-height:51px;
+  margin-top:5px;
+  border:0;
+  border-radius:14px;
+  font-weight:900;
+  font-size:14px;
+  background:white;
+  color:#071017;
+}
+
+.finishRoom:disabled{
+  opacity:.35;
+}
+
+/* ---------- ACTION PROGRESS ---------- */
+
+.actionProgress{
+  margin-top:10px;
+  height:7px;
+  border-radius:10px;
+  overflow:hidden;
+  background:rgba(255,255,255,.09);
+}
+
+.actionProgress div{
+  height:100%;
+  width:0;
+  background:#38bdf8;
+}
+
+/* ---------- OVERLAY ---------- */
 
 .overlay{
   position:absolute;
   inset:0;
-  z-index:20;
-  background:rgba(4,10,15,.94);
-  backdrop-filter:blur(12px);
+  z-index:30;
+  background:rgba(3,9,13,.95);
+  backdrop-filter:blur(10px);
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   padding:25px;
+}
+
+.overlay.hidden{
+  display:none;
 }
 
 .panel{
@@ -360,50 +518,45 @@ body{
   text-align:center;
 }
 
-.bigIcon{
-  font-size:54px;
+.panelIcon{
+  font-size:55px;
 }
 
 .panel h1{
-  margin:10px 0 5px;
-  font-size:29px;
+  margin:9px 0;
 }
 
 .panel p{
   color:#9fb0bb;
-  font-size:13px;
   line-height:1.5;
+  font-size:13px;
 }
 
-button.mainButton{
-  border:0;
+.mainButton{
   width:100%;
   min-height:52px;
   margin-top:15px;
-  border-radius:16px;
+  border:0;
+  border-radius:15px;
   background:white;
-  color:#071017;
-  font-size:16px;
+  color:#061018;
   font-weight:900;
+  font-size:15px;
 }
 
 .results{
-  margin-top:18px;
   display:grid;
-  gap:8px;
+  gap:7px;
+  margin-top:15px;
 }
 
 .result{
-  background:rgba(255,255,255,.07);
-  border-radius:12px;
-  padding:10px;
   display:flex;
   justify-content:space-between;
-  font-size:14px;
-}
-
-.hidden{
-  display:none;
+  background:rgba(255,255,255,.07);
+  border-radius:11px;
+  padding:10px;
+  font-size:13px;
 }
 </style>
 </head>
@@ -412,88 +565,137 @@ button.mainButton{
 
 <div id="game">
 
-  <div class="top">
-    <div class="hotel">🏨 MaDen Hotel</div>
-    <div class="time" id="clock">08:00</div>
+  <div class="header">
+    <div class="logo">🏨 MaDen Hotel</div>
+    <div class="clock" id="clock">08:00</div>
   </div>
 
   <div class="stats">
+
     <div class="stat">
-      <strong id="cleaned">0</strong>
-      <span>🧹 УБРАНО</span>
+      <b id="cleaned">0</b>
+      <span>🧹 НОМЕРОВ</span>
     </div>
 
     <div class="stat">
-      <strong id="score">0</strong>
+      <b id="score">0</b>
       <span>⭐ ОЧКИ</span>
     </div>
 
     <div class="stat">
-      <strong id="happy">0</strong>
+      <b id="happy">0</b>
       <span>😊 ДОВОЛЬНЫ</span>
     </div>
+
   </div>
 
-  <div class="satisfaction" id="satisfactionBox">
-    <div class="satTitle">
+  <div class="satisfaction" id="satBox">
+
+    <div class="satText">
       <span>ДОВОЛЬСТВО</span>
       <span>НЕДОВОЛЬСТВО</span>
     </div>
 
-    <div class="satLine">
-      <span class="face">😊</span>
+    <div class="satRow">
 
-      <div class="bar">
-        <div class="pointer" id="pointer"></div>
+      <span>😊</span>
+
+      <div class="gradient">
+        <div class="marker" id="marker"></div>
       </div>
 
-      <span class="face">😡</span>
+      <span>😡</span>
+
     </div>
+
   </div>
 
-  <div class="floorLabel">ЭТАЖ 1</div>
+  <div class="floorTitle">
+    ЭТАЖ 1
+  </div>
 
   <div class="floor">
 
-    <div class="rooms" id="leftRooms"></div>
+    <div class="roomColumn" id="left"></div>
 
     <div class="corridor">
-      <div class="cart" id="cart">🧑‍🔧<br>🛒</div>
+      <div class="worker" id="worker">
+        🧑‍🔧<br>🛒
+      </div>
     </div>
 
-    <div class="rooms" id="rightRooms"></div>
+    <div class="roomColumn" id="right"></div>
 
-  </div>
-
-  <div class="job">
-    <div class="jobTitle">ТЕКУЩАЯ ЗАДАЧА</div>
-    <div class="jobMain" id="jobMain">Ожидание запросов...</div>
-
-    <div class="jobProgress">
-      <div id="jobBar"></div>
-    </div>
   </div>
 
   <div class="message" id="message"></div>
 
+  <!-- ROOM VIEW -->
+
+  <div class="roomView hidden" id="roomView">
+
+    <div class="roomHeader">
+
+      <button class="back" id="backButton">
+        ‹ Коридор
+      </button>
+
+      <div>
+        <div class="roomTitle" id="insideNumber">
+          Номер
+        </div>
+
+        <div class="guestCount" id="insideGuests"></div>
+      </div>
+
+    </div>
+
+    <div class="roomScene" id="roomScene"></div>
+
+    <div class="taskBox">
+
+      <div class="taskTitle">
+        ЗАДАЧИ В НОМЕРЕ
+      </div>
+
+      <div id="requestText"></div>
+
+      <div id="tasks"></div>
+
+      <div class="actionProgress">
+        <div id="actionBar"></div>
+      </div>
+
+      <button class="finishRoom"
+      id="finishRoom" disabled>
+        НОМЕР ГОТОВ
+      </button>
+
+    </div>
+
+  </div>
+
   <!-- START -->
 
-  <div class="overlay" id="startScreen">
+  <div class="overlay" id="start">
 
     <div class="panel">
-      <div class="bigIcon">🏨</div>
+
+      <div class="panelIcon">🏨</div>
 
       <h1>MaDen Hotel</h1>
 
       <p>
-        Следи за номерами, вовремя выполняй уборку
-        и не позволяй недовольству гостей дойти
-        до красного предела.
+        Осматривай номера и выполняй только то,
+        что действительно требуется.
+        Следи за просьбами гостей и не допускай
+        критического недовольства.
       </p>
 
-      <button class="mainButton" id="startButton">
+      <button class="mainButton" id="startBtn">
         НАЧАТЬ СМЕНУ
       </button>
+
     </div>
 
   </div>
@@ -504,40 +706,40 @@ button.mainButton{
 
     <div class="panel">
 
-      <div class="bigIcon">🏨</div>
+      <div class="panelIcon">😠</div>
 
       <h1>Смена завершена</h1>
 
       <p>
-        Уровень недовольства гостей достиг
-        критической отметки.
+        Недовольство гостей достигло
+        критического уровня.
       </p>
 
       <div class="results">
 
         <div class="result">
           <span>🧹 Уборка номеров</span>
-          <strong id="finalCleaned">0</strong>
+          <b id="finalCleaned">0</b>
         </div>
 
         <div class="result">
           <span>⭐ Очки</span>
-          <strong id="finalScore">0</strong>
+          <b id="finalScore">0</b>
         </div>
 
         <div class="result">
           <span>😊 Довольные клиенты</span>
-          <strong id="finalHappy">0</strong>
+          <b id="finalHappy">0</b>
         </div>
 
         <div class="result">
           <span>🏆 Рекорд</span>
-          <strong id="record">0</strong>
+          <b id="record">0</b>
         </div>
 
       </div>
 
-      <button class="mainButton" id="restartButton">
+      <button class="mainButton" id="restart">
         ЕЩЁ РАЗ
       </button>
 
@@ -548,91 +750,239 @@ button.mainButton{
 </div>
 
 <script>
-const ROOM_NUMBERS = [
-  101,102,
-  103,104,
-  105,106,
-  107,108
+const numbers=[
+  101,102,103,104,
+  105,106,107,108
 ];
 
-let rooms = [];
+let rooms=[];
 
-let score = 0;
-let cleaned = 0;
-let happy = 0;
+let running=false;
+let busy=false;
 
-/*
-0 = максимально довольны
-100 = проигрыш
-*/
-let dissatisfaction = 12;
+let score=0;
+let cleaned=0;
+let happy=0;
 
-let gameMinutes = 8 * 60;
+let dissatisfaction=10;
 
-let running = false;
-let cleaning = false;
+let gameMinutes=480;
 
-let mainTimer = null;
-let eventTimer = null;
+let selectedRoom=null;
 
-const clockEl = document.getElementById("clock");
-const scoreEl = document.getElementById("score");
-const cleanedEl = document.getElementById("cleaned");
-const happyEl = document.getElementById("happy");
-
-const pointer = document.getElementById("pointer");
-const satisfactionBox =
-  document.getElementById("satisfactionBox");
-
-const jobMain = document.getElementById("jobMain");
-const jobBar = document.getElementById("jobBar");
-const message = document.getElementById("message");
-
-const cart = document.getElementById("cart");
-
-const leftRooms =
-  document.getElementById("leftRooms");
-
-const rightRooms =
-  document.getElementById("rightRooms");
-
-const startScreen =
-  document.getElementById("startScreen");
-
-const gameOverScreen =
-  document.getElementById("gameOver");
+let tickTimer=null;
+let requestTimer=null;
 
 
-function createRooms(){
+/* ELEMENTS */
 
-  rooms = ROOM_NUMBERS.map((number,index)=>({
+const left=document.getElementById("left");
+const right=document.getElementById("right");
+
+const clock=document.getElementById("clock");
+
+const scoreEl=document.getElementById("score");
+const cleanedEl=document.getElementById("cleaned");
+const happyEl=document.getElementById("happy");
+
+const marker=document.getElementById("marker");
+const satBox=document.getElementById("satBox");
+
+const worker=document.getElementById("worker");
+const message=document.getElementById("message");
+
+const roomView=document.getElementById("roomView");
+
+const insideNumber=
+document.getElementById("insideNumber");
+
+const insideGuests=
+document.getElementById("insideGuests");
+
+const roomScene=
+document.getElementById("roomScene");
+
+const requestText=
+document.getElementById("requestText");
+
+const tasks=
+document.getElementById("tasks");
+
+const finishRoom=
+document.getElementById("finishRoom");
+
+const actionBar=
+document.getElementById("actionBar");
+
+
+/* CREATE ROOMS */
+
+function resetRooms(){
+
+  rooms=numbers.map((number,index)=>({
+
     number,
     index,
+
     status:"ready",
-    waiting:0
+
+    guests:
+      Math.random()<.55 ? 2 : 1,
+
+    waiting:0,
+
+    request:null,
+
+    conditions:null
+
   }));
 
-  renderRooms();
+  renderHotel();
 }
 
 
-function renderRooms(){
+/* RANDOM ROOM CONDITION */
 
-  leftRooms.innerHTML="";
-  rightRooms.innerHTML="";
+function createFullCleaning(room){
 
-  rooms.forEach((room,index)=>{
+  room.status="clean";
 
-    const el=document.createElement("div");
+  room.guests=
+    Math.random()<.55 ? 2 : 1;
 
-    el.className="room "+room.status;
+  room.waiting=0;
+
+  room.request="После выезда требуется уборка";
+
+  room.conditions={
+
+    bed:
+      Math.random()<.9,
+
+    mirror:
+      Math.random()<.48,
+
+    trash:
+      Math.random()<.78,
+
+    floor:
+      Math.random()<.7,
+
+    towelsDirty:
+      room.guests,
+
+    towelsClean:0
+
+  };
+
+}
+
+
+function createSmallRequest(room){
+
+  room.status="request";
+
+  room.waiting=0;
+
+  room.guests=
+    Math.random()<.55 ? 2 : 1;
+
+  const types=[
+    "towels",
+    "trash",
+    "mirror"
+  ];
+
+  const type=
+    types[
+      Math.floor(Math.random()*types.length)
+    ];
+
+  if(type==="towels"){
+
+    room.request=
+      room.guests===2
+      ? "Гости просят заменить 2 полотенца"
+      : "Гость просит заменить полотенце";
+
+    room.conditions={
+
+      bed:false,
+      mirror:false,
+      trash:false,
+      floor:false,
+
+      towelsDirty:room.guests,
+      towelsClean:0
+    };
+
+  }
+
+  if(type==="trash"){
+
+    room.request=
+      "Гость просит забрать мусор";
+
+    room.conditions={
+
+      bed:false,
+      mirror:false,
+      trash:true,
+      floor:false,
+
+      towelsDirty:0,
+      towelsClean:0
+    };
+
+  }
+
+  if(type==="mirror"){
+
+    room.request=
+      "Гость просит почистить зеркало";
+
+    room.conditions={
+
+      bed:false,
+      mirror:true,
+      trash:false,
+      floor:false,
+
+      towelsDirty:0,
+      towelsClean:0
+    };
+
+  }
+
+}
+
+
+/* RENDER HOTEL */
+
+function renderHotel(){
+
+  left.innerHTML="";
+  right.innerHTML="";
+
+  rooms.forEach((room,i)=>{
+
+    const button=
+      document.createElement("button");
+
+    button.className=
+      "room "+room.status;
 
     let icon="🟢";
     let text="ГОТОВ";
 
     if(room.status==="clean"){
       icon="🧹";
-      text="ТРЕБУЕТ УБОРКИ";
+      text="УБОРКА";
+    }
+
+    if(room.status==="request"){
+      icon="🛎️";
+      text="ПРОСЬБА ГОСТЯ";
     }
 
     if(room.status==="urgent"){
@@ -645,212 +995,569 @@ function renderRooms(){
       text="НЕ БЕСПОКОИТЬ";
     }
 
-    el.innerHTML=`
-      <div class="number">${room.number}</div>
-      <div class="roomIcon">${icon}</div>
-      <div class="roomText">${text}</div>
+    button.innerHTML=`
+      <div class="roomNumber">
+        ${room.number}
+      </div>
+
+      <div class="roomIcon">
+        ${icon}
+      </div>
+
+      <div class="roomStatus">
+        ${text}
+      </div>
 
       ${
-        room.status==="clean" ||
-        room.status==="urgent"
-        ?
-        `<div class="roomProgress">
-           <div style="width:${Math.min(room.waiting,100)}%"></div>
-         </div>`
-        :""
+        room.status!=="ready" &&
+        room.status!=="dnd"
+
+        ?`
+
+        <div class="waitBar">
+          <div style="
+          width:${Math.min(room.waiting,100)}%">
+          </div>
+        </div>
+
+        `:""
       }
     `;
 
-    el.addEventListener("click",()=>{
-      selectRoom(room);
-    });
+    button.addEventListener(
+      "click",
+      ()=>openRoom(room)
+    );
 
-    if(index%2===0){
-      leftRooms.appendChild(el);
-    }else{
-      rightRooms.appendChild(el);
-    }
+    if(i%2===0)
+      left.appendChild(button);
+    else
+      right.appendChild(button);
 
   });
+
 }
 
 
-function selectRoom(room){
+/* OPEN ROOM */
 
-  if(!running || cleaning) return;
+function openRoom(room){
+
+  if(!running || busy)
+    return;
 
   if(room.status==="ready"){
-    showMessage("Номер уже готов ✓");
+
+    say("✓ Номер уже готов");
     return;
+
   }
 
   if(room.status==="dnd"){
-    changeSatisfaction(7);
-    showMessage("⛔ Гость просил не беспокоить!");
+
+    satisfaction(6);
+
+    say(
+      "⛔ Гость просил не беспокоить"
+    );
+
     return;
   }
 
-  if(
-    room.status==="clean" ||
-    room.status==="urgent"
-  ){
-    cleanRoom(room);
-  }
+  selectedRoom=room;
+
+  moveWorker(room);
+
+  roomView.classList.remove("hidden");
+
+  renderInside();
 }
 
 
-function cleanRoom(room){
+/* MOVE WORKER */
 
-  cleaning=true;
+function moveWorker(room){
 
-  moveCart(room);
-
-  const stages=[
-    "🛏 Заправляем постель",
-    "🛁 Убираем ванную",
-    "🗑 Выносим мусор",
-    "🧹 Убираем пол",
-    "🧴 Проверяем принадлежности"
-  ];
-
-  let stage=0;
-  let progress=0;
-
-  jobMain.textContent=
-    `Номер ${room.number} • ${stages[0]}`;
-
-  jobBar.style.width="0%";
-
-  const timer=setInterval(()=>{
-
-    if(!running){
-      clearInterval(timer);
-      return;
-    }
-
-    progress+=4;
-
-    jobBar.style.width=progress+"%";
-
-    const newStage=
-      Math.min(
-        Math.floor(progress/20),
-        stages.length-1
-      );
-
-    if(newStage!==stage){
-      stage=newStage;
-
-      jobMain.textContent=
-        `Номер ${room.number} • ${stages[stage]}`;
-    }
-
-    if(progress>=100){
-
-      clearInterval(timer);
-
-      finishCleaning(room);
-    }
-
-  },90);
-}
-
-
-function finishCleaning(room){
-
-  const wasUrgent =
-    room.status==="urgent";
-
-  room.status="ready";
-  room.waiting=0;
-
-  cleaned++;
-  happy++;
-
-  const points =
-    wasUrgent ? 200 : 120;
-
-  score+=points;
-
-  /*
-  Хорошая работа возвращает
-  шкалу к зелёному.
-  */
-  changeSatisfaction(
-    wasUrgent ? -13 : -8
-  );
-
-  cleanedEl.textContent=cleaned;
-  happyEl.textContent=happy;
-  scoreEl.textContent=score;
-
-  jobMain.textContent=
-    `Номер ${room.number} готов ✓`;
-
-  jobBar.style.width="100%";
-
-  showMessage(
-    wasUrgent
-      ? `Отлично! Срочная уборка +${points}`
-      : `Гость доволен! +${points}`
-  );
-
-  cleaning=false;
-
-  renderRooms();
-}
-
-
-function moveCart(room){
-
-  /*
-  4 положения по коридору
-  */
-
-  const row =
+  const row=
     Math.floor(room.index/2);
 
   const positions=[
-    7,
-    31,
-    55,
-    79
+    5,29,53,77
   ];
 
-  cart.style.top=
+  worker.style.top=
     positions[row]+"%";
 }
 
+
+/* RENDER ROOM */
+
+function renderInside(){
+
+  const r=selectedRoom;
+
+  if(!r) return;
+
+  insideNumber.textContent=
+    "Номер "+r.number;
+
+  insideGuests.textContent=
+    r.guests===2
+    ?"👥 2 гостя"
+    :"👤 1 гость";
+
+  requestText.innerHTML=
+    r.request
+    ?`
+      <div class="requestText">
+        🛎️ ${r.request}
+      </div>
+    `
+    :"";
+
+  const c=r.conditions;
+
+  roomScene.innerHTML=`
+
+    <div class="sceneTop">
+
+      ${objectHTML(
+        "🛏",
+        "Кровать",
+        c.bed,
+        "Нужно перестелить",
+        "В порядке"
+      )}
+
+      ${objectHTML(
+        "🪞",
+        "Зеркало",
+        c.mirror,
+        "Нужно почистить",
+        "Чисто"
+      )}
+
+    </div>
+
+    <div class="sceneBottom">
+
+      ${objectHTML(
+        "🗑️",
+        "Мусор",
+        c.trash,
+        "Нужно убрать",
+        "Пусто"
+      )}
+
+      ${objectHTML(
+        "🧺",
+        "Полотенца",
+        c.towelsDirty>0 ||
+        c.towelsClean<r.guests &&
+        r.request?.includes("полотен"),
+
+        c.towelsDirty>0
+        ?`${c.towelsDirty} грязн.`
+        :"Заменены",
+
+        "В порядке"
+      )}
+
+      ${objectHTML(
+        "🧹",
+        "Пол",
+        c.floor,
+        "Нужно помыть",
+        "Чисто"
+      )}
+
+    </div>
+  `;
+
+  renderTasks();
+}
+
+
+function objectHTML(
+  icon,
+  name,
+  bad,
+  badText,
+  goodText
+){
+
+  return`
+    <div class="object ${bad?"bad":"good"}">
+
+      <div class="objectIcon">
+        ${icon}
+      </div>
+
+      <div class="objectName">
+        ${name}
+      </div>
+
+      <div class="objectState">
+        ${bad?badText:goodText}
+      </div>
+
+    </div>
+  `;
+}
+
+
+/* TASKS */
+
+function renderTasks(){
+
+  const r=selectedRoom;
+  const c=r.conditions;
+
+  tasks.innerHTML="";
+
+  let count=0;
+
+
+  if(c.towelsDirty>0){
+
+    addTask(
+      "🧺",
+      `Забрать грязные полотенца ×${c.towelsDirty}`,
+      ()=>{
+        c.towelsDirty=0;
+      }
+    );
+
+    count++;
+  }
+
+
+  /*
+  После того как грязные полотенца
+  забраны, появляется задача
+  принести такое же количество чистых.
+  */
+
+  const needsTowels=
+    r.request &&
+    r.request.toLowerCase()
+      .includes("полотен");
+
+  const fullClean=
+    r.request &&
+    r.request.includes("выезда");
+
+
+  if(
+    c.towelsDirty===0 &&
+    c.towelsClean<r.guests &&
+    (needsTowels || fullClean)
+  ){
+
+    const amount=
+      r.guests-c.towelsClean;
+
+    addTask(
+      "🤍",
+      `Положить чистые полотенца ×${amount}`,
+      ()=>{
+        c.towelsClean=r.guests;
+      }
+    );
+
+    count++;
+  }
+
+
+  if(c.bed){
+
+    addTask(
+      "🛏",
+      "Перестелить кровать",
+      ()=>{
+        c.bed=false;
+      }
+    );
+
+    count++;
+  }
+
+
+  if(c.trash){
+
+    addTask(
+      "🗑️",
+      "Убрать мусор",
+      ()=>{
+        c.trash=false;
+      }
+    );
+
+    count++;
+  }
+
+
+  if(c.mirror){
+
+    addTask(
+      "🪞",
+      "Почистить зеркало",
+      ()=>{
+        c.mirror=false;
+      }
+    );
+
+    count++;
+  }
+
+
+  if(c.floor){
+
+    addTask(
+      "🧹",
+      "Помыть пол",
+      ()=>{
+        c.floor=false;
+      }
+    );
+
+    count++;
+  }
+
+
+  if(count===0){
+
+    tasks.innerHTML=`
+      <div style="
+      text-align:center;
+      padding:12px;
+      color:#86efac;
+      font-size:13px;
+      font-weight:800">
+        ✓ Всё необходимое выполнено
+      </div>
+    `;
+
+    finishRoom.disabled=false;
+
+  }else{
+
+    finishRoom.disabled=true;
+  }
+
+}
+
+
+/* ADD TASK */
+
+function addTask(
+  icon,
+  name,
+  callback
+){
+
+  const button=
+    document.createElement("button");
+
+  button.className="task";
+
+  button.innerHTML=`
+
+    <span class="taskIcon">
+      ${icon}
+    </span>
+
+    <span class="taskName">
+      ${name}
+    </span>
+
+    <span class="taskTime">
+      выполнить
+    </span>
+  `;
+
+  button.addEventListener(
+    "click",
+    ()=>performTask(
+      button,
+      callback
+    )
+  );
+
+  tasks.appendChild(button);
+}
+
+
+/* PERFORM ACTION */
+
+function performTask(
+  button,
+  callback
+){
+
+  if(busy) return;
+
+  busy=true;
+
+  const all=
+    tasks.querySelectorAll("button");
+
+  all.forEach(
+    b=>b.disabled=true
+  );
+
+  actionBar.style.width="0%";
+
+  let progress=0;
+
+  const timer=
+    setInterval(()=>{
+
+      if(!running){
+
+        clearInterval(timer);
+        return;
+      }
+
+      progress+=10;
+
+      actionBar.style.width=
+        progress+"%";
+
+      if(progress>=100){
+
+        clearInterval(timer);
+
+        callback();
+
+        score+=20;
+
+        scoreEl.textContent=score;
+
+        /*
+        Каждое действие занимает
+        5 игровых минут.
+        */
+
+        gameMinutes+=5;
+
+        updateClockDisplay();
+
+        busy=false;
+
+        actionBar.style.width="0%";
+
+        renderInside();
+
+      }
+
+    },55);
+
+}
+
+
+/* COMPLETE ROOM */
+
+finishRoom.addEventListener(
+  "click",
+  ()=>{
+
+    if(
+      !selectedRoom ||
+      busy
+    ) return;
+
+    const urgent=
+      selectedRoom.status==="urgent";
+
+    selectedRoom.status="ready";
+    selectedRoom.waiting=0;
+    selectedRoom.request=null;
+    selectedRoom.conditions=null;
+
+    cleaned++;
+    happy++;
+
+    const bonus=
+      urgent ? 180 : 120;
+
+    score+=bonus;
+
+    satisfaction(
+      urgent ? -13 : -9
+    );
+
+    cleanedEl.textContent=cleaned;
+    happyEl.textContent=happy;
+    scoreEl.textContent=score;
+
+    say(
+      urgent
+      ?`⭐ Срочный номер выполнен +${bonus}`
+      :`😊 Гость доволен +${bonus}`
+    );
+
+    selectedRoom=null;
+
+    roomView.classList.add("hidden");
+
+    renderHotel();
+
+  }
+);
+
+
+/* BACK */
+
+document.getElementById(
+  "backButton"
+).addEventListener(
+  "click",
+  ()=>{
+
+    if(busy) return;
+
+    roomView.classList.add("hidden");
+
+    selectedRoom=null;
+
+  }
+);
+
+
+/* NEW EVENT */
 
 function generateEvent(){
 
   if(!running) return;
 
-  const readyRooms =
+  const available=
     rooms.filter(
       r=>r.status==="ready"
     );
 
-  if(readyRooms.length===0)
+  if(!available.length)
     return;
 
-  const room =
-    readyRooms[
+  const room=
+    available[
       Math.floor(
-        Math.random()*readyRooms.length
+        Math.random()*available.length
       )
     ];
 
+  const chance=Math.random();
+
+
   /*
-  Иногда сначала появляется
-  "Не беспокоить".
+  Не беспокоить
   */
 
-  if(Math.random()<0.24){
+  if(chance<.18){
 
     room.status="dnd";
 
-    renderRooms();
+    renderHotel();
 
     setTimeout(()=>{
 
@@ -858,28 +1565,40 @@ function generateEvent(){
         running &&
         room.status==="dnd"
       ){
-        room.status="clean";
-        room.waiting=0;
 
-        showMessage(
-          `🧹 Номер ${room.number} можно убрать`
+        createFullCleaning(room);
+
+        say(
+          `🧹 Номер ${room.number} освободился`
         );
 
-        renderRooms();
+        renderHotel();
       }
 
-    },3500+Math.random()*3500);
+    },4500);
+
+    return;
+  }
+
+
+  /*
+  Просьба гостя
+  */
+
+  if(chance<.53){
+
+    createSmallRequest(room);
 
   }else{
 
-    room.status="clean";
-    room.waiting=0;
-
+    createFullCleaning(room);
   }
 
-  renderRooms();
+  renderHotel();
 }
 
+
+/* WAITING */
 
 function updateWaiting(){
 
@@ -887,53 +1606,45 @@ function updateWaiting(){
 
     if(
       room.status==="clean" ||
+      room.status==="request" ||
       room.status==="urgent"
     ){
 
-      room.waiting+=1.25;
-
-      /*
-      После 55% ожидания
-      номер становится срочным.
-      */
+      room.waiting+=1.1;
 
       if(
-        room.waiting>=55 &&
-        room.status==="clean"
+        room.waiting>=58 &&
+        room.status!=="urgent"
       ){
+
         room.status="urgent";
 
-        showMessage(
-          `⚠️ Номер ${room.number} ждёт слишком долго!`
+        say(
+          `⚠️ Номер ${room.number} ждёт!`
         );
       }
 
-      /*
-      Чем дольше ждёт номер,
-      тем быстрее падает довольство.
-      */
 
-      if(room.waiting>30)
-        changeSatisfaction(.18);
+      if(room.waiting>25)
+        satisfaction(.12);
 
-      if(room.waiting>60)
-        changeSatisfaction(.25);
+      if(room.waiting>55)
+        satisfaction(.22);
 
-      if(room.waiting>=100){
+      if(room.waiting>80)
+        satisfaction(.34);
 
-        room.waiting=70;
-
-        changeSatisfaction(6);
-      }
     }
 
   });
 
-  renderRooms();
+  renderHotel();
 }
 
 
-function changeSatisfaction(amount){
+/* SATISFACTION */
+
+function satisfaction(amount){
 
   dissatisfaction+=amount;
 
@@ -946,142 +1657,157 @@ function changeSatisfaction(amount){
       )
     );
 
-  pointer.style.left=
+  marker.style.left=
     dissatisfaction+"%";
 
-  if(dissatisfaction>=72){
-    satisfactionBox.classList.add("danger");
-  }else{
-    satisfactionBox.classList.remove("danger");
-  }
+  if(dissatisfaction>=72)
+    satBox.classList.add("danger");
+  else
+    satBox.classList.remove("danger");
 
-  if(dissatisfaction>=100){
+
+  if(dissatisfaction>=100)
     endGame();
-  }
+
 }
 
 
-function updateClock(){
+/* CLOCK */
 
-  /*
-  +5 игровых минут
-  */
+function updateClockDisplay(){
 
-  gameMinutes+=5;
-
-  const hours =
+  const h=
     Math.floor(gameMinutes/60)%24;
 
-  const minutes =
+  const m=
     gameMinutes%60;
 
-  clockEl.textContent=
-    String(hours).padStart(2,"0")+
-    ":"+
-    String(minutes).padStart(2,"0");
+  clock.textContent=
+    String(h).padStart(2,"0")
+    +":"+
+    String(m).padStart(2,"0");
 }
 
 
-function showMessage(text){
+/* MESSAGE */
+
+function say(text){
 
   message.textContent=text;
 
-  clearTimeout(
-    showMessage.timer
-  );
+  clearTimeout(say.timer);
 
-  showMessage.timer=
-    setTimeout(()=>{
-      message.textContent="";
-    },2300);
+  say.timer=setTimeout(
+    ()=>message.textContent="",
+    2300
+  );
 }
 
 
+/* START */
+
 function startGame(){
 
-  clearInterval(mainTimer);
-  clearInterval(eventTimer);
+  clearInterval(tickTimer);
+  clearInterval(requestTimer);
+
+  running=true;
+  busy=false;
 
   score=0;
   cleaned=0;
   happy=0;
 
-  dissatisfaction=12;
+  dissatisfaction=10;
 
-  gameMinutes=8*60;
+  gameMinutes=480;
 
-  running=true;
-  cleaning=false;
+  selectedRoom=null;
 
-  scoreEl.textContent="0";
-  cleanedEl.textContent="0";
-  happyEl.textContent="0";
+  scoreEl.textContent=0;
+  cleanedEl.textContent=0;
+  happyEl.textContent=0;
 
-  clockEl.textContent="08:00";
+  marker.style.left="10%";
 
-  pointer.style.left=
-    dissatisfaction+"%";
+  satBox.classList.remove("danger");
 
-  satisfactionBox
-    .classList.remove("danger");
+  updateClockDisplay();
 
-  jobMain.textContent=
-    "Ожидание запросов...";
+  resetRooms();
 
-  jobBar.style.width="0%";
+  document.getElementById(
+    "start"
+  ).classList.add("hidden");
 
-  cart.style.top="48%";
+  document.getElementById(
+    "gameOver"
+  ).classList.add("hidden");
 
-  createRooms();
-
-  startScreen.classList.add("hidden");
-  gameOverScreen.classList.add("hidden");
 
   /*
-  Первый запрос появляется
-  почти сразу.
+  Первое событие
   */
 
-  setTimeout(()=>{
-    if(running)
-      generateEvent();
-  },1200);
+  setTimeout(
+    ()=>{
+      if(running)
+        generateEvent();
+    },
+    1000
+  );
+
 
   /*
-  Основной игровой цикл
+  Игровые часы:
+  +5 минут каждую секунду
   */
 
-  mainTimer=setInterval(()=>{
+  tickTimer=setInterval(
+    ()=>{
 
-    if(!running) return;
+      if(!running) return;
 
-    updateClock();
-    updateWaiting();
+      gameMinutes+=5;
 
-  },1000);
+      updateClockDisplay();
+
+      updateWaiting();
+
+    },
+    1000
+  );
+
 
   /*
-  Новые запросы.
+  Новый запрос
   */
 
-  eventTimer=setInterval(()=>{
+  requestTimer=setInterval(
+    ()=>{
+      if(running)
+        generateEvent();
+    },
+    4200
+  );
 
-    if(running)
-      generateEvent();
-
-  },4000);
 }
 
 
+/* GAME OVER */
+
 function endGame(){
 
-  if(!running) return;
+  if(!running)
+    return;
 
   running=false;
-  cleaning=false;
+  busy=false;
 
-  clearInterval(mainTimer);
-  clearInterval(eventTimer);
+  clearInterval(tickTimer);
+  clearInterval(requestTimer);
+
+  roomView.classList.add("hidden");
 
   document.getElementById(
     "finalCleaned"
@@ -1095,9 +1821,11 @@ function endGame(){
     "finalHappy"
   ).textContent=happy;
 
+
   let record=0;
 
   try{
+
     record=
       Number(
         localStorage.getItem(
@@ -1106,47 +1834,53 @@ function endGame(){
       )||0;
 
     if(score>record){
+
       record=score;
 
       localStorage.setItem(
         "madenHotelRecord",
         record
       );
+
     }
+
   }catch(e){}
+
 
   document.getElementById(
     "record"
   ).textContent=record;
 
-  gameOverScreen
-    .classList.remove("hidden");
+
+  document.getElementById(
+    "gameOver"
+  ).classList.remove("hidden");
+
 }
 
 
+/* BUTTONS */
+
 document.getElementById(
-  "startButton"
+  "startBtn"
 ).addEventListener(
   "click",
   startGame
 );
 
 document.getElementById(
-  "restartButton"
+  "restart"
 ).addEventListener(
   "click",
   startGame
 );
 
 
-/*
-Начальное положение шкалы
-*/
+/* INITIAL */
 
-pointer.style.left=
-  dissatisfaction+"%";
+marker.style.left="10%";
 
-createRooms();
+resetRooms();
 
 </script>
 
