@@ -1,203 +1,1154 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 
-    <title>Tetris Nova — Звёзды тебя ждут</title>
+<meta name="theme-color" content="#101820">
 
-    <link rel="stylesheet" href="style.css">
+<title>MaDen Hotel</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:#071017;
+  color:white;
+}
+
+body{
+  display:flex;
+  justify-content:center;
+}
+
+#game{
+  width:min(100%,520px);
+  min-height:100dvh;
+  background:
+    linear-gradient(rgba(5,12,18,.82),rgba(5,12,18,.94)),
+    radial-gradient(circle at top,#294557,#071017 60%);
+  position:relative;
+  overflow:hidden;
+  padding:
+    max(14px,env(safe-area-inset-top))
+    14px
+    max(18px,env(safe-area-inset-bottom));
+}
+
+/* HEADER */
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.hotel{
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.time{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.12);
+  padding:7px 12px;
+  border-radius:14px;
+  font-weight:800;
+  font-variant-numeric:tabular-nums;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.stat{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:8px 4px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:18px;
+}
+
+.stat span{
+  display:block;
+  margin-top:2px;
+  color:#aebbc5;
+  font-size:10px;
+}
+
+/* SATISFACTION */
+
+.satisfaction{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:11px;
+  margin-bottom:12px;
+}
+
+.satTitle{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  color:#c9d3da;
+  margin-bottom:7px;
+}
+
+.satLine{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.face{
+  font-size:19px;
+}
+
+.bar{
+  flex:1;
+  height:16px;
+  border-radius:999px;
+  background:
+    linear-gradient(
+      90deg,
+      #22c55e 0%,
+      #84cc16 30%,
+      #facc15 52%,
+      #f97316 72%,
+      #ef4444 100%
+    );
+  position:relative;
+  border:2px solid rgba(255,255,255,.18);
+}
+
+.pointer{
+  position:absolute;
+  top:50%;
+  width:5px;
+  height:24px;
+  border-radius:5px;
+  background:white;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 7px rgba(0,0,0,.8);
+  transition:left .45s ease;
+}
+
+.satisfaction.danger .bar{
+  animation:dangerPulse .65s infinite alternate;
+}
+
+@keyframes dangerPulse{
+  from{filter:brightness(1)}
+  to{filter:brightness(1.5)}
+}
+
+/* FLOOR */
+
+.floorLabel{
+  text-align:center;
+  color:#9fb0bb;
+  font-size:11px;
+  letter-spacing:2px;
+  margin:5px 0 8px;
+}
+
+.floor{
+  display:grid;
+  grid-template-columns:1fr 52px 1fr;
+  gap:7px;
+}
+
+.rooms{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.corridor{
+  position:relative;
+  border-left:1px dashed rgba(255,255,255,.18);
+  border-right:1px dashed rgba(255,255,255,.18);
+  border-radius:10px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.025),
+      rgba(255,255,255,.09),
+      rgba(255,255,255,.025)
+    );
+  min-height:400px;
+}
+
+.cart{
+  position:absolute;
+  width:44px;
+  text-align:center;
+  font-size:25px;
+  left:50%;
+  transform:translateX(-50%);
+  top:48%;
+  transition:top .45s ease;
+}
+
+/* ROOMS */
+
+.room{
+  height:92px;
+  border-radius:14px;
+  background:linear-gradient(145deg,#263944,#15242d);
+  border:1px solid rgba(255,255,255,.13);
+  color:white;
+  padding:7px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 5px 15px rgba(0,0,0,.16);
+}
+
+.room:active{
+  transform:scale(.97);
+}
+
+.number{
+  position:absolute;
+  top:5px;
+  left:7px;
+  font-size:11px;
+  color:#aebbc5;
+  font-weight:800;
+}
+
+.roomIcon{
+  font-size:27px;
+  line-height:1;
+  margin-bottom:5px;
+}
+
+.roomText{
+  font-size:10px;
+  font-weight:800;
+  text-align:center;
+}
+
+.room.ready{
+  border-color:rgba(34,197,94,.4);
+}
+
+.room.clean{
+  border-color:rgba(250,204,21,.55);
+}
+
+.room.dnd{
+  border-color:rgba(239,68,68,.42);
+  background:linear-gradient(145deg,#40252a,#21181b);
+}
+
+.room.urgent{
+  border-color:#ff633f;
+  background:linear-gradient(145deg,#4b2922,#241a18);
+  animation:urgent 1s infinite alternate;
+}
+
+@keyframes urgent{
+  from{box-shadow:0 0 0 rgba(255,75,45,0)}
+  to{box-shadow:0 0 16px rgba(255,75,45,.55)}
+}
+
+.roomProgress{
+  position:absolute;
+  left:5px;
+  right:5px;
+  bottom:5px;
+  height:4px;
+  border-radius:5px;
+  background:rgba(255,255,255,.1);
+  overflow:hidden;
+}
+
+.roomProgress div{
+  height:100%;
+  width:0%;
+  background:#facc15;
+}
+
+/* CURRENT JOB */
+
+.job{
+  margin-top:12px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:16px;
+  padding:11px;
+  min-height:75px;
+}
+
+.jobTitle{
+  font-size:12px;
+  color:#aebbc5;
+}
+
+.jobMain{
+  margin-top:4px;
+  font-size:15px;
+  font-weight:800;
+}
+
+.jobProgress{
+  height:7px;
+  background:rgba(255,255,255,.1);
+  border-radius:8px;
+  overflow:hidden;
+  margin-top:9px;
+}
+
+.jobProgress div{
+  height:100%;
+  width:0%;
+  background:#38bdf8;
+  transition:width .2s linear;
+}
+
+.message{
+  height:24px;
+  margin-top:7px;
+  text-align:center;
+  color:#facc15;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* START / GAME OVER */
+
+.overlay{
+  position:absolute;
+  inset:0;
+  z-index:20;
+  background:rgba(4,10,15,.94);
+  backdrop-filter:blur(12px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:25px;
+}
+
+.panel{
+  width:100%;
+  max-width:340px;
+  text-align:center;
+}
+
+.bigIcon{
+  font-size:54px;
+}
+
+.panel h1{
+  margin:10px 0 5px;
+  font-size:29px;
+}
+
+.panel p{
+  color:#9fb0bb;
+  font-size:13px;
+  line-height:1.5;
+}
+
+button.mainButton{
+  border:0;
+  width:100%;
+  min-height:52px;
+  margin-top:15px;
+  border-radius:16px;
+  background:white;
+  color:#071017;
+  font-size:16px;
+  font-weight:900;
+}
+
+.results{
+  margin-top:18px;
+  display:grid;
+  gap:8px;
+}
+
+.result{
+  background:rgba(255,255,255,.07);
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+}
+
+.hidden{
+  display:none;
+}
+</style>
 </head>
 
 <body>
 
-    <!-- Космический фон -->
-    <div class="stars"></div>
+<div id="game">
 
+  <div class="top">
+    <div class="hotel">🏨 MaDen Hotel</div>
+    <div class="time" id="clock">08:00</div>
+  </div>
 
-    <!-- Главное меню -->
-    <section id="menu" class="screen">
+  <div class="stats">
+    <div class="stat">
+      <strong id="cleaned">0</strong>
+      <span>🧹 УБРАНО</span>
+    </div>
 
-        <h1 class="logo">
-            TETRIS NOVA
-        </h1>
+    <div class="stat">
+      <strong id="score">0</strong>
+      <span>⭐ ОЧКИ</span>
+    </div>
 
-        <p class="subtitle">
-            ⭐ Звёзды тебя ждут...
-        </p>
+    <div class="stat">
+      <strong id="happy">0</strong>
+      <span>😊 ДОВОЛЬНЫ</span>
+    </div>
+  </div>
 
-        <button id="startButton">
-            🚀 НАЧАТЬ ПОЛЁТ
-        </button>
+  <div class="satisfaction" id="satisfactionBox">
+    <div class="satTitle">
+      <span>ДОВОЛЬСТВО</span>
+      <span>НЕДОВОЛЬСТВО</span>
+    </div>
 
-        <div class="menu-info">
-            <p>Преодолей галактику</p>
-            <p>Создай своё созвездие</p>
+    <div class="satLine">
+      <span class="face">😊</span>
+
+      <div class="bar">
+        <div class="pointer" id="pointer"></div>
+      </div>
+
+      <span class="face">😡</span>
+    </div>
+  </div>
+
+  <div class="floorLabel">ЭТАЖ 1</div>
+
+  <div class="floor">
+
+    <div class="rooms" id="leftRooms"></div>
+
+    <div class="corridor">
+      <div class="cart" id="cart">🧑‍🔧<br>🛒</div>
+    </div>
+
+    <div class="rooms" id="rightRooms"></div>
+
+  </div>
+
+  <div class="job">
+    <div class="jobTitle">ТЕКУЩАЯ ЗАДАЧА</div>
+    <div class="jobMain" id="jobMain">Ожидание запросов...</div>
+
+    <div class="jobProgress">
+      <div id="jobBar"></div>
+    </div>
+  </div>
+
+  <div class="message" id="message"></div>
+
+  <!-- START -->
+
+  <div class="overlay" id="startScreen">
+
+    <div class="panel">
+      <div class="bigIcon">🏨</div>
+
+      <h1>MaDen Hotel</h1>
+
+      <p>
+        Следи за номерами, вовремя выполняй уборку
+        и не позволяй недовольству гостей дойти
+        до красного предела.
+      </p>
+
+      <button class="mainButton" id="startButton">
+        НАЧАТЬ СМЕНУ
+      </button>
+    </div>
+
+  </div>
+
+  <!-- GAME OVER -->
+
+  <div class="overlay hidden" id="gameOver">
+
+    <div class="panel">
+
+      <div class="bigIcon">🏨</div>
+
+      <h1>Смена завершена</h1>
+
+      <p>
+        Уровень недовольства гостей достиг
+        критической отметки.
+      </p>
+
+      <div class="results">
+
+        <div class="result">
+          <span>🧹 Уборка номеров</span>
+          <strong id="finalCleaned">0</strong>
         </div>
 
-    </section>
-
-
-
-    <!-- Игровой экран -->
-    <section id="gameScreen" class="hidden">
-
-
-        <div class="game-container">
-
-
-            <!-- Поле игры -->
-            <canvas id="gameBoard"
-                    width="300"
-                    height="600">
-            </canvas>
-
-
-
-            <!-- Панель информации -->
-
-            <aside class="panel">
-
-                <h2>
-                    TETRIS NOVA
-                </h2>
-
-
-                <div class="next-box">
-
-                    <h3>
-                        Следующая
-                    </h3>
-
-                    <canvas id="nextPiece"
-                            width="120"
-                            height="120">
-                    </canvas>
-
-                </div>
-
-
-
-                <div class="stats">
-
-                    <p>
-                        ⭐ Счёт:
-                        <span id="score">
-                            0
-                        </span>
-                    </p>
-
-
-                    <p>
-                        🌌 Уровень:
-                        <span id="level">
-                            1
-                        </span>
-                    </p>
-
-
-                    <p>
-                        ✨ Линии:
-                        <span id="lines">
-                            0
-                        </span>
-                    </p>
-
-
-                    <p>
-                        🏆 Рекорд:
-                        <span id="highScore">
-                            0
-                        </span>
-                    </p>
-
-                </div>
-
-
-                <button id="pauseButton">
-                    ⏸ Пауза
-                </button>
-
-
-            </aside>
-
-
+        <div class="result">
+          <span>⭐ Очки</span>
+          <strong id="finalScore">0</strong>
         </div>
 
-
-
-        <!-- Управление телефоном -->
-
-        <div class="mobile-controls">
-
-            <button id="left">
-                ◀
-            </button>
-
-
-            <button id="rotate">
-                ⟳
-            </button>
-
-
-            <button id="right">
-                ▶
-            </button>
-
-
-            <button id="down">
-                ▼
-            </button>
-
+        <div class="result">
+          <span>😊 Довольные клиенты</span>
+          <strong id="finalHappy">0</strong>
         </div>
 
+        <div class="result">
+          <span>🏆 Рекорд</span>
+          <strong id="record">0</strong>
+        </div>
 
-    </section>
+      </div>
+
+      <button class="mainButton" id="restartButton">
+        ЕЩЁ РАЗ
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const ROOM_NUMBERS = [
+  101,102,
+  103,104,
+  105,106,
+  107,108
+];
+
+let rooms = [];
+
+let score = 0;
+let cleaned = 0;
+let happy = 0;
+
+/*
+0 = максимально довольны
+100 = проигрыш
+*/
+let dissatisfaction = 12;
+
+let gameMinutes = 8 * 60;
+
+let running = false;
+let cleaning = false;
+
+let mainTimer = null;
+let eventTimer = null;
+
+const clockEl = document.getElementById("clock");
+const scoreEl = document.getElementById("score");
+const cleanedEl = document.getElementById("cleaned");
+const happyEl = document.getElementById("happy");
+
+const pointer = document.getElementById("pointer");
+const satisfactionBox =
+  document.getElementById("satisfactionBox");
+
+const jobMain = document.getElementById("jobMain");
+const jobBar = document.getElementById("jobBar");
+const message = document.getElementById("message");
+
+const cart = document.getElementById("cart");
+
+const leftRooms =
+  document.getElementById("leftRooms");
+
+const rightRooms =
+  document.getElementById("rightRooms");
+
+const startScreen =
+  document.getElementById("startScreen");
+
+const gameOverScreen =
+  document.getElementById("gameOver");
 
 
+function createRooms(){
+
+  rooms = ROOM_NUMBERS.map((number,index)=>({
+    number,
+    index,
+    status:"ready",
+    waiting:0
+  }));
+
+  renderRooms();
+}
 
 
+function renderRooms(){
 
-    <!-- Окно окончания игры -->
+  leftRooms.innerHTML="";
+  rightRooms.innerHTML="";
 
-    <section id="gameOver"
-             class="screen hidden">
+  rooms.forEach((room,index)=>{
+
+    const el=document.createElement("div");
+
+    el.className="room "+room.status;
+
+    let icon="🟢";
+    let text="ГОТОВ";
+
+    if(room.status==="clean"){
+      icon="🧹";
+      text="ТРЕБУЕТ УБОРКИ";
+    }
+
+    if(room.status==="urgent"){
+      icon="⚠️";
+      text="СРОЧНО";
+    }
+
+    if(room.status==="dnd"){
+      icon="⛔";
+      text="НЕ БЕСПОКОИТЬ";
+    }
+
+    el.innerHTML=`
+      <div class="number">${room.number}</div>
+      <div class="roomIcon">${icon}</div>
+      <div class="roomText">${text}</div>
+
+      ${
+        room.status==="clean" ||
+        room.status==="urgent"
+        ?
+        `<div class="roomProgress">
+           <div style="width:${Math.min(room.waiting,100)}%"></div>
+         </div>`
+        :""
+      }
+    `;
+
+    el.addEventListener("click",()=>{
+      selectRoom(room);
+    });
+
+    if(index%2===0){
+      leftRooms.appendChild(el);
+    }else{
+      rightRooms.appendChild(el);
+    }
+
+  });
+}
 
 
-        <h1>
-            ⭐ ЗВЁЗДЫ ТЕБЯ ЖДУТ...
-        </h1>
+function selectRoom(room){
+
+  if(!running || cleaning) return;
+
+  if(room.status==="ready"){
+    showMessage("Номер уже готов ✓");
+    return;
+  }
+
+  if(room.status==="dnd"){
+    changeSatisfaction(7);
+    showMessage("⛔ Гость просил не беспокоить!");
+    return;
+  }
+
+  if(
+    room.status==="clean" ||
+    room.status==="urgent"
+  ){
+    cleanRoom(room);
+  }
+}
 
 
-        <p>
-            Твоё путешествие продолжается.
-        </p>
+function cleanRoom(room){
+
+  cleaning=true;
+
+  moveCart(room);
+
+  const stages=[
+    "🛏 Заправляем постель",
+    "🛁 Убираем ванную",
+    "🗑 Выносим мусор",
+    "🧹 Убираем пол",
+    "🧴 Проверяем принадлежности"
+  ];
+
+  let stage=0;
+  let progress=0;
+
+  jobMain.textContent=
+    `Номер ${room.number} • ${stages[0]}`;
+
+  jobBar.style.width="0%";
+
+  const timer=setInterval(()=>{
+
+    if(!running){
+      clearInterval(timer);
+      return;
+    }
+
+    progress+=4;
+
+    jobBar.style.width=progress+"%";
+
+    const newStage=
+      Math.min(
+        Math.floor(progress/20),
+        stages.length-1
+      );
+
+    if(newStage!==stage){
+      stage=newStage;
+
+      jobMain.textContent=
+        `Номер ${room.number} • ${stages[stage]}`;
+    }
+
+    if(progress>=100){
+
+      clearInterval(timer);
+
+      finishCleaning(room);
+    }
+
+  },90);
+}
 
 
-        <p>
-            Финальный счёт:
-            <span id="finalScore">
-                0
-            </span>
-        </p>
+function finishCleaning(room){
+
+  const wasUrgent =
+    room.status==="urgent";
+
+  room.status="ready";
+  room.waiting=0;
+
+  cleaned++;
+  happy++;
+
+  const points =
+    wasUrgent ? 200 : 120;
+
+  score+=points;
+
+  /*
+  Хорошая работа возвращает
+  шкалу к зелёному.
+  */
+  changeSatisfaction(
+    wasUrgent ? -13 : -8
+  );
+
+  cleanedEl.textContent=cleaned;
+  happyEl.textContent=happy;
+  scoreEl.textContent=score;
+
+  jobMain.textContent=
+    `Номер ${room.number} готов ✓`;
+
+  jobBar.style.width="100%";
+
+  showMessage(
+    wasUrgent
+      ? `Отлично! Срочная уборка +${points}`
+      : `Гость доволен! +${points}`
+  );
+
+  cleaning=false;
+
+  renderRooms();
+}
 
 
+function moveCart(room){
 
-        <button id="restartButton">
-            🚀 Вернуться в полёт
-        </button>
+  /*
+  4 положения по коридору
+  */
+
+  const row =
+    Math.floor(room.index/2);
+
+  const positions=[
+    7,
+    31,
+    55,
+    79
+  ];
+
+  cart.style.top=
+    positions[row]+"%";
+}
 
 
-    </section>
+function generateEvent(){
+
+  if(!running) return;
+
+  const readyRooms =
+    rooms.filter(
+      r=>r.status==="ready"
+    );
+
+  if(readyRooms.length===0)
+    return;
+
+  const room =
+    readyRooms[
+      Math.floor(
+        Math.random()*readyRooms.length
+      )
+    ];
+
+  /*
+  Иногда сначала появляется
+  "Не беспокоить".
+  */
+
+  if(Math.random()<0.24){
+
+    room.status="dnd";
+
+    renderRooms();
+
+    setTimeout(()=>{
+
+      if(
+        running &&
+        room.status==="dnd"
+      ){
+        room.status="clean";
+        room.waiting=0;
+
+        showMessage(
+          `🧹 Номер ${room.number} можно убрать`
+        );
+
+        renderRooms();
+      }
+
+    },3500+Math.random()*3500);
+
+  }else{
+
+    room.status="clean";
+    room.waiting=0;
+
+  }
+
+  renderRooms();
+}
 
 
+function updateWaiting(){
+
+  rooms.forEach(room=>{
+
+    if(
+      room.status==="clean" ||
+      room.status==="urgent"
+    ){
+
+      room.waiting+=1.25;
+
+      /*
+      После 55% ожидания
+      номер становится срочным.
+      */
+
+      if(
+        room.waiting>=55 &&
+        room.status==="clean"
+      ){
+        room.status="urgent";
+
+        showMessage(
+          `⚠️ Номер ${room.number} ждёт слишком долго!`
+        );
+      }
+
+      /*
+      Чем дольше ждёт номер,
+      тем быстрее падает довольство.
+      */
+
+      if(room.waiting>30)
+        changeSatisfaction(.18);
+
+      if(room.waiting>60)
+        changeSatisfaction(.25);
+
+      if(room.waiting>=100){
+
+        room.waiting=70;
+
+        changeSatisfaction(6);
+      }
+    }
+
+  });
+
+  renderRooms();
+}
 
 
-    <!-- Скрипты -->
+function changeSatisfaction(amount){
 
-    <script src="particles.js"></script>
-<script src="audio.js"></script>
-<script src="game.js"></script>
+  dissatisfaction+=amount;
+
+  dissatisfaction=
+    Math.max(
+      0,
+      Math.min(
+        100,
+        dissatisfaction
+      )
+    );
+
+  pointer.style.left=
+    dissatisfaction+"%";
+
+  if(dissatisfaction>=72){
+    satisfactionBox.classList.add("danger");
+  }else{
+    satisfactionBox.classList.remove("danger");
+  }
+
+  if(dissatisfaction>=100){
+    endGame();
+  }
+}
+
+
+function updateClock(){
+
+  /*
+  +5 игровых минут
+  */
+
+  gameMinutes+=5;
+
+  const hours =
+    Math.floor(gameMinutes/60)%24;
+
+  const minutes =
+    gameMinutes%60;
+
+  clockEl.textContent=
+    String(hours).padStart(2,"0")+
+    ":"+
+    String(minutes).padStart(2,"0");
+}
+
+
+function showMessage(text){
+
+  message.textContent=text;
+
+  clearTimeout(
+    showMessage.timer
+  );
+
+  showMessage.timer=
+    setTimeout(()=>{
+      message.textContent="";
+    },2300);
+}
+
+
+function startGame(){
+
+  clearInterval(mainTimer);
+  clearInterval(eventTimer);
+
+  score=0;
+  cleaned=0;
+  happy=0;
+
+  dissatisfaction=12;
+
+  gameMinutes=8*60;
+
+  running=true;
+  cleaning=false;
+
+  scoreEl.textContent="0";
+  cleanedEl.textContent="0";
+  happyEl.textContent="0";
+
+  clockEl.textContent="08:00";
+
+  pointer.style.left=
+    dissatisfaction+"%";
+
+  satisfactionBox
+    .classList.remove("danger");
+
+  jobMain.textContent=
+    "Ожидание запросов...";
+
+  jobBar.style.width="0%";
+
+  cart.style.top="48%";
+
+  createRooms();
+
+  startScreen.classList.add("hidden");
+  gameOverScreen.classList.add("hidden");
+
+  /*
+  Первый запрос появляется
+  почти сразу.
+  */
+
+  setTimeout(()=>{
+    if(running)
+      generateEvent();
+  },1200);
+
+  /*
+  Основной игровой цикл
+  */
+
+  mainTimer=setInterval(()=>{
+
+    if(!running) return;
+
+    updateClock();
+    updateWaiting();
+
+  },1000);
+
+  /*
+  Новые запросы.
+  */
+
+  eventTimer=setInterval(()=>{
+
+    if(running)
+      generateEvent();
+
+  },4000);
+}
+
+
+function endGame(){
+
+  if(!running) return;
+
+  running=false;
+  cleaning=false;
+
+  clearInterval(mainTimer);
+  clearInterval(eventTimer);
+
+  document.getElementById(
+    "finalCleaned"
+  ).textContent=cleaned;
+
+  document.getElementById(
+    "finalScore"
+  ).textContent=score;
+
+  document.getElementById(
+    "finalHappy"
+  ).textContent=happy;
+
+  let record=0;
+
+  try{
+    record=
+      Number(
+        localStorage.getItem(
+          "madenHotelRecord"
+        )
+      )||0;
+
+    if(score>record){
+      record=score;
+
+      localStorage.setItem(
+        "madenHotelRecord",
+        record
+      );
+    }
+  }catch(e){}
+
+  document.getElementById(
+    "record"
+  ).textContent=record;
+
+  gameOverScreen
+    .classList.remove("hidden");
+}
+
+
+document.getElementById(
+  "startButton"
+).addEventListener(
+  "click",
+  startGame
+);
+
+document.getElementById(
+  "restartButton"
+).addEventListener(
+  "click",
+  startGame
+);
+
+
+/*
+Начальное положение шкалы
+*/
+
+pointer.style.left=
+  dissatisfaction+"%";
+
+createRooms();
+
+</script>
 
 </body>
 </html>
